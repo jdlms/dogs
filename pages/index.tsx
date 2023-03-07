@@ -1,3 +1,4 @@
+import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -7,30 +8,36 @@ export default function Home() {
 
   const [namesArr, setNamesArr] = useState([]);
 
-  useEffect(() => {
-    const handleClick = async function () {
-      try {
-        const res = await axios.get("/api/getRandomImage");
-        if (res.status === 200) {
-          // get img
-          setRandomImg(res.data[0].url);
-          // set correctName
+  const handleClick = async function () {
+    try {
+      const res = await axios.get("/api/getRandomImage");
+      console.log("hitting the api!");
+      setRandomImg(res.data[0].url);
 
-          setCorrectName(res.data[0].breeds[0].name);
-          // set array of names
-          let dogNamesArr: string[] = [];
-          res.data.map((dogObj, index) => {
-            if (dogNamesArr.includes(dogObj.breeds[0].name) === false && dogNamesArr.length < 5) {
-              return dogNamesArr.push(dogObj.breeds[0].name);
-            }
-          });
-          setNamesArr(dogNamesArr);
+      setCorrectName(res.data[0].breeds[0].name);
+
+      let dogNamesArr: string[] = [];
+      res.data.map((dogObj, index) => {
+        if (dogNamesArr.includes(dogObj.breeds[0].name) === false && dogNamesArr.length < 5) {
+          return dogNamesArr.push(dogObj.breeds[0].name);
         }
-      } catch (error) {
-        console.error("There was an error:", error);
-      }
+      });
+      
+      shuffleArray(dogNamesArr);
+      setNamesArr(dogNamesArr);
+    } catch (error) {
+      console.error("There was an error:", error);
+    }
+  };
+
+  useEffect(() => {
+    let isSubscribed = true;
+    if (isSubscribed) {
+      handleClick();
+    }
+    return () => {
+      isSubscribed = false;
     };
-    handleClick();
   }, []);
 
   console.log(namesArr);
