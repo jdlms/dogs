@@ -22,7 +22,7 @@ export default function Home() {
           return dogNamesArr.push(dogObj.breeds[0].name);
         }
       });
-      
+
       shuffleArray(dogNamesArr);
       setNamesArr(dogNamesArr);
     } catch (error) {
@@ -53,8 +53,9 @@ export default function Home() {
           alt=""
         />
       </div>
-
-      <ul>{namesArr.length > 0 ? namesArr.map((name) => <li>{name}</li>) : "Loading..."}</ul>
+      <div>
+        {namesArr.length > 0 ? namesArr.map((name) => <button>{name}</button>) : "Loading..."}
+      </div>
     </>
   );
 }
