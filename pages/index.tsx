@@ -15,10 +15,15 @@ export default function Home() {
           // get img
           setRandomImg(res.data[0].url);
           // set correctName
+
           setCorrectName(res.data[0].breeds[0].name);
           // set array of names
           let dogNamesArr: string[] = [];
-          res.data.map((dogObj) => dogNamesArr.push(dogObj.breeds[0].name));
+          res.data.map((dogObj, index) => {
+            if (dogNamesArr.includes(dogObj.breeds[0].name) === false && dogNamesArr.length < 5) {
+              return dogNamesArr.push(dogObj.breeds[0].name);
+            }
+          });
           setNamesArr(dogNamesArr);
         }
       } catch (error) {
