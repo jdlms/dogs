@@ -19,6 +19,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  margin: 1rem;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

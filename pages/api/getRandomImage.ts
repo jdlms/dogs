@@ -9,6 +9,7 @@ export default async function getRandomImage(req: NextApiRequest, res: NextApiRe
         params: {
           size: "small",
           has_breeds: 1,
+          limit: 5,
         },
       }
     );
