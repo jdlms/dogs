@@ -11,20 +11,25 @@ export default function ByName() {
   const handleClick = async function () {
     try {
       const res = await axios.get("/api/getRandomImage");
-      console.log("hitting the api!");
       setRandomImg(res.data[0].url);
 
       setCorrectName(res.data[0].breeds[0].name);
 
       let dogNamesArr: string[] = [];
+      let dogNamesObj: object[] = [];
       res.data.map((dogObj, index) => {
         if (dogNamesArr.includes(dogObj.breeds[0].name) === false && dogNamesArr.length < 5) {
           return dogNamesArr.push(dogObj.breeds[0].name);
         }
       });
-      console.log(res.data[0].breeds[0].name);
       shuffleArray(dogNamesArr);
-      setNamesArr(dogNamesArr);
+      dogNamesArr.map((name) => {
+        return dogNamesObj.push({
+          id: crypto.randomUUID(),
+          breed: name,
+        });
+      });
+      setNamesArr(dogNamesObj);
     } catch (error) {
       console.error("There was an error:", error);
     }
@@ -49,7 +54,9 @@ export default function ByName() {
         <img style={{ height: "250px", objectFit: "contain" }} src={randomImg} alt="" />
       </div>
       <div>
-        {namesArr.length > 0 ? namesArr.map((name) => <button>{name}</button>) : "Loading..."}
+        {namesArr.length > 0
+          ? namesArr.map((name) => <button key={name.id}>{name.breed}</button>)
+          : "Loading..."}
       </div>
     </>
   );
