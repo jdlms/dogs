@@ -1,6 +1,5 @@
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
-import { attempt } from "joi";
 import { useEffect, useState } from "react";
 
 export default function ByName() {
@@ -16,14 +15,14 @@ export default function ByName() {
 
   const getRandomImg = async function () {
     try {
-      const res = await axios.get("/api/getRandomImage");
+      const res = await axios.get("/api/getDogs");
       setRandomImg(res.data[0].url);
 
       setCorrectName(res.data[0].breeds[0].name);
 
       let dogNamesArr: string[] = [];
       let dogNamesObj: object[] = [];
-      res.data.map((dogObj, index) => {
+      res.data.map((dogObj) => {
         if (
           dogNamesArr.includes(dogObj.breeds[0].name) === false &&
           dogNamesArr.length < difficulty
@@ -54,7 +53,7 @@ export default function ByName() {
   };
 
   const hardModeClick = () => {
-    setDifficulty(20);
+    setDifficulty(15);
     setGuess(!guess);
   };
 
@@ -70,7 +69,7 @@ export default function ByName() {
 
   return (
     <>
-      <h1>Guess that Dog!</h1>
+      <h1>🐶 Guess that Dog!</h1>
       <h2 style={{ display: "inline" }}>
         Score: {score} / Attempts: {attempts}
       </h2>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function getRandomImage(req: NextApiRequest, res: NextApiResponse) {
+export default async function getDogs(req: NextApiRequest, res: NextApiResponse) {
   try {
     const axiosResponse = await axios.get(
       "https://api.thedogapi.com/v1/images/search?api_key=" + process.env.DOG_API_KEY,
