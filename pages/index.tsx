@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [score, setscore] = useState(0);
   return (
     <>
       <h1>Guess that Dog!</h1>
