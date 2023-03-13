@@ -2,26 +2,24 @@ import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function ByImage() {
+export default function Photo() {
   const [randomName, setRandomName] = useState([]);
-  const [correctImg, setCorrectImg] = useState("");
-  const [imgArr, setImgArr] = useState([]);
 
-  const [difficulty, setDifficulty] = useState(5);
+  const [imgArr, setImgArr] = useState([]);
+  const [correctImg, setCorrectImg] = useState("");
+
+  const [difficultyNum, setDifficultyNum] = useState(5);
 
   const getRandomName = async function () {
     try {
       const res = await axios.get("/api/getDogs");
-// const nameToGuess = [{url: }]
-
       setRandomName(res.data[0].breeds[0].name);
-
       setCorrectImg(res.data[0].url);
 
       let dogImgArr: object[] = [];
 
       res.data.map((dogObj) => {
-        if (dogImgArr.includes(dogObj.url) === false && dogImgArr.length < difficulty) {
+        if (dogImgArr.includes(dogObj.url) === false && dogImgArr.length < difficultyNum) {
           return dogImgArr.push({
             url: dogObj.url,
             breed: dogObj.breeds[0].name,
@@ -30,12 +28,14 @@ export default function ByImage() {
         }
       });
       shuffleArray(dogImgArr);
-      setImgArr(dogImgArr)
-      console.table(imgArr);
+      setImgArr(dogImgArr);
+      console.log(dogImgArr);
     } catch (error) {
       console.error("There was an error:", error);
     }
   };
+
+  console.log(randomName);
 
   useEffect(() => {
     let isSubscribed = true;

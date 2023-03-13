@@ -2,10 +2,13 @@ import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function ByName() {
+export default function Name() {
   const [randomImg, setRandomImg] = useState("");
+
   const [correctName, setCorrectName] = useState("");
+
   const [namesArr, setNamesArr] = useState([]);
+
   const [guess, setGuess] = useState(false);
 
   const [score, setScore] = useState(0);
@@ -38,7 +41,6 @@ export default function ByName() {
         });
       });
       setNamesArr(dogNamesObj);
-      console.table(dogNamesObj);
     } catch (error) {
       console.error("There was an error:", error);
     }
@@ -69,7 +71,7 @@ export default function ByName() {
 
   return (
     <>
-      <h1>🐶 Guess that Dog!</h1>
+
       <h2 style={{ display: "inline" }}>
         Score: {score} / Attempts: {attempts}
       </h2>

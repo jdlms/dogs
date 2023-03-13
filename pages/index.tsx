@@ -1,19 +1,31 @@
+import Name from "@/components/Name";
+import Photo from "@/components/Photo";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
   const [score, setscore] = useState(0);
+
+  const [displayName, setDisplayName] = useState(false);
+  const [displayPhoto, setDisplayPhoto] = useState(false);
+
+  const handleNameClick = () => setDisplayName(!displayName);
+  const handlePhotoClick = () => setDisplayPhoto(!displayPhoto);
+
   return (
     <>
-      <h1>Guess that Dog!</h1>
-      {/* <button onClick={handleClick}>Give me a dog</button> */}
+      <h1>🐶 Guess that Dog!</h1>
 
-      <Link href={"/by-name"}>
-        <button>Guess by name</button>
-      </Link>
-      <Link href={"/by-photo"}>
-        <button>Guess by photo</button>
-      </Link>
+      {!displayName && !displayPhoto ? (
+        <>
+          <button onClick={handleNameClick}>By name</button>
+          <button onClick={handlePhotoClick}>By photo</button>
+        </>
+      ) : null}
+
+      {displayName ? <Name score={score} /> : null}
+
+      {displayPhoto ? <Photo score={score} /> : null}
     </>
   );
 }
