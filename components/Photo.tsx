@@ -1,8 +1,9 @@
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Score } from "./Score";
 
-export default function Photo() {
+export default function Photo({ score, setScore, attempts, setAttempts }) {
   const [randomName, setRandomName] = useState([]);
 
   const [imgArr, setImgArr] = useState([]);
@@ -12,6 +13,7 @@ export default function Photo() {
 
   const getRandomName = async function () {
     try {
+      console.log("hitting the api...");
       const res = await axios.get("/api/getDogs");
       setRandomName(res.data[0].breeds[0].name);
       setCorrectImg(res.data[0].url);
@@ -29,13 +31,10 @@ export default function Photo() {
       });
       shuffleArray(dogImgArr);
       setImgArr(dogImgArr);
-      console.log(dogImgArr);
     } catch (error) {
       console.error("There was an error:", error);
     }
   };
-
-  console.log(randomName);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -47,5 +46,19 @@ export default function Photo() {
     };
   }, []);
 
-  return <div>guess by image TK</div>;
+  return (
+    <>
+      <Score score={score} attempts={attempts} />
+      {randomName ? <button>{randomName}</button> : null}
+      <ul style={{ display: "flex", flexDirection: "row", gap: "10px", listStyle: "none" }}>
+        {imgArr.length > 0
+          ? imgArr.map((img) => (
+              <li key={img.id}>
+                <img style={{ height: "100px", objectFit: "fill" }} src={img.url} alt={img.breed} />
+              </li>
+            ))
+          : "Loading..."}
+      </ul>
+    </>
+  );
 }

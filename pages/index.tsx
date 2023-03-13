@@ -1,10 +1,11 @@
+import { Back } from "@/components/Back";
 import Name from "@/components/Name";
 import Photo from "@/components/Photo";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
-  const [score, setscore] = useState(0);
+  const [score, setScore] = useState(0);
+  const [attempts, setAttempts] = useState(0);
 
   const [displayName, setDisplayName] = useState(false);
   const [displayPhoto, setDisplayPhoto] = useState(false);
@@ -23,9 +24,17 @@ export default function Home() {
         </>
       ) : null}
 
-      {displayName ? <Name score={score} /> : null}
+      {displayName ? (
+        <Name score={score} setScore={setScore} attempts={attempts} setAttempts={setAttempts} />
+      ) : null}
 
-      {displayPhoto ? <Photo score={score} /> : null}
+      {displayPhoto ? (
+        <Photo score={score} setScore={setScore} attempts={attempts} setAttempts={setAttempts} />
+      ) : null}
+
+      {displayName || displayPhoto ? (
+        <Back setDisplayName={setDisplayName} setDisplayPhoto={setDisplayPhoto} />
+      ) : null}
     </>
   );
 }

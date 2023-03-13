@@ -1,46 +1,43 @@
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Score } from "./Score";
 
-export default function Name() {
+export default function Name({ score, setScore, attempts, setAttempts }) {
   const [randomImg, setRandomImg] = useState("");
 
-  const [correctName, setCorrectName] = useState("");
-
   const [namesArr, setNamesArr] = useState([]);
+  const [correctName, setCorrectName] = useState("");
 
   const [guess, setGuess] = useState(false);
 
-  const [score, setScore] = useState(0);
-  const [attempts, setAttempts] = useState(0);
-
-  const [difficulty, setDifficulty] = useState(5);
+  const [difficultyNum, setDifficultyNum] = useState(5);
 
   const getRandomImg = async function () {
     try {
       const res = await axios.get("/api/getDogs");
       setRandomImg(res.data[0].url);
-
       setCorrectName(res.data[0].breeds[0].name);
 
-      let dogNamesArr: string[] = [];
+      let dogNamesArr: object[] = [];
       let dogNamesObj: object[] = [];
+
       res.data.map((dogObj) => {
         if (
           dogNamesArr.includes(dogObj.breeds[0].name) === false &&
-          dogNamesArr.length < difficulty
+          dogNamesArr.length < difficultyNum
         ) {
-          return dogNamesArr.push(dogObj.breeds[0].name);
+          return dogNamesArr.push({
+            url: dogObj.url,
+            breed: dogObj.breeds[0].name,
+            id: crypto.randomUUID(),
+          });
         }
       });
+
       shuffleArray(dogNamesArr);
-      dogNamesArr.map((name) => {
-        return dogNamesObj.push({
-          id: crypto.randomUUID(),
-          breed: name,
-        });
-      });
-      setNamesArr(dogNamesObj);
+
+      setNamesArr(dogNamesArr);
     } catch (error) {
       console.error("There was an error:", error);
     }
@@ -55,7 +52,7 @@ export default function Name() {
   };
 
   const hardModeClick = () => {
-    setDifficulty(15);
+    setDifficultyNum(15);
     setGuess(!guess);
   };
 
@@ -71,13 +68,10 @@ export default function Name() {
 
   return (
     <>
-
-      <h2 style={{ display: "inline" }}>
-        Score: {score} / Attempts: {attempts}
-      </h2>
+      <Score score={score} attempts={attempts} />
       <button onClick={() => hardModeClick()}>Hard Mode</button>
       <div style={{ height: "40%", width: "auto" }}>
-        <img style={{ height: "250px", objectFit: "contain" }} src={randomImg} alt="" />
+        <img style={{ height: "250px", objectFit: "contain" }} src={randomImg} alt={""} />
       </div>
       <div>
         {namesArr.length > 0
