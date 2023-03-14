@@ -1,16 +1,50 @@
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Score } from "./Score";
 
-export default function Name({ score, setScore, attempts, setAttempts }) {
-  const [randomImg, setRandomImg] = useState("");
+interface ScoringProps {
+  score: number;
+  setScore: Dispatch<SetStateAction<number>>;
+  attempts: number;
+  setAttempts: Dispatch<SetStateAction<number>>;
+}
 
+interface Dog {
+  breeds: [
+    {
+      bred_for: string;
+      breed_group: string;
+      height: {
+        imperial: string;
+        metric: string;
+      };
+      id: number;
+      life_span: string;
+      name: string;
+      reference_image_id: string;
+      temperament: string;
+      weight: {
+        imperial: string;
+        metric: string;
+      };
+    }
+  ];
+  height: number;
+  id: string;
+  url: string;
+  width: number;
+}
+
+interface StateProperties {
+  
+}
+
+export default function Name({ score, setScore, attempts, setAttempts }: ScoringProps) {
+  const [randomImg, setRandomImg] = useState("");
   const [namesArr, setNamesArr] = useState([]);
   const [correctName, setCorrectName] = useState("");
-
   const [guess, setGuess] = useState(false);
-
   const [difficultyNum, setDifficultyNum] = useState(5);
 
   const getRandomImg = async function () {
@@ -22,11 +56,11 @@ export default function Name({ score, setScore, attempts, setAttempts }) {
       let dogNamesArr: object[] = [];
       let dogNamesObj: object[] = [];
 
-      res.data.map((dogObj) => {
-        if (
-          dogNamesArr.includes(dogObj.breeds[0].name) === false &&
-          dogNamesArr.length < difficultyNum
-        ) {
+      // #todo in this .map breed name duplications are currently possible
+
+      res.data.map((dogObj: Dog) => {
+        console.log(dogObj.breeds[0].name);
+        if (dogNamesArr.length < difficultyNum) {
           return dogNamesArr.push({
             url: dogObj.url,
             breed: dogObj.breeds[0].name,
@@ -43,7 +77,7 @@ export default function Name({ score, setScore, attempts, setAttempts }) {
     }
   };
 
-  const handleClick = (playerGuess) => {
+  const handleClick = (playerGuess: string) => {
     const newScore = score + 1;
     const attemptCount = attempts + 1;
     setGuess(!guess);
