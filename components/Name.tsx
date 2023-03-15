@@ -1,51 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Dog } from "@/interfaces/dog";
+import { DogObjs } from "@/interfaces/dogObjs";
+import { ScoringProps } from "@/interfaces/scoringProps";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Score } from "./Score";
-
-interface ScoringProps {
-  score: number;
-  setScore: Dispatch<SetStateAction<number>>;
-  attempts: number;
-  setAttempts: Dispatch<SetStateAction<number>>;
-}
-
-interface Dog {
-  breeds: [
-    {
-      bred_for: string;
-      breed_group: string;
-      height: {
-        imperial: string;
-        metric: string;
-      };
-      id: number;
-      life_span: string;
-      name: string;
-      reference_image_id: string;
-      temperament: string;
-      weight: {
-        imperial: string;
-        metric: string;
-      };
-    }
-  ];
-  height: number;
-  id: string;
-  url: string;
-  width: number;
-}
-
-interface StateProperties {
-  url: string;
-  breed: string;
-  id: string;
-}
 
 export default function Name({ score, setScore, attempts, setAttempts }: ScoringProps) {
   const [randomImg, setRandomImg] = useState("");
-  const [namesArr, setNamesArr] = useState<StateProperties[]>([]);
+  const [namesArr, setNamesArr] = useState<DogObjs[]>([]);
   const [correctName, setCorrectName] = useState("");
   const [guess, setGuess] = useState(false);
   const [difficultyNum, setDifficultyNum] = useState(5);
@@ -55,13 +19,11 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
       const res = await axios.get("/api/getDogs");
       setRandomImg(res.data[0].url);
       setCorrectName(res.data[0].breeds[0].name);
-
-      let dogNamesArr: StateProperties[] = [];
+      let dogNamesArr: DogObjs[] = [];
 
       // #todo in this .map breed name duplications are currently possible
 
-      res.data.map((dogObj: Dog) => {
-        console.log(dogObj.breeds[0].name);
+      res.data.filter((dogObj: Dog) => {
         if (dogNamesArr.length < difficultyNum) {
           return dogNamesArr.push({
             url: dogObj.url,
