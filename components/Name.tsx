@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -37,12 +38,14 @@ interface Dog {
 }
 
 interface StateProperties {
-  
+  url: string;
+  breed: string;
+  id: string;
 }
 
 export default function Name({ score, setScore, attempts, setAttempts }: ScoringProps) {
   const [randomImg, setRandomImg] = useState("");
-  const [namesArr, setNamesArr] = useState([]);
+  const [namesArr, setNamesArr] = useState<StateProperties[]>([]);
   const [correctName, setCorrectName] = useState("");
   const [guess, setGuess] = useState(false);
   const [difficultyNum, setDifficultyNum] = useState(5);
@@ -53,8 +56,7 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
       setRandomImg(res.data[0].url);
       setCorrectName(res.data[0].breeds[0].name);
 
-      let dogNamesArr: object[] = [];
-      let dogNamesObj: object[] = [];
+      let dogNamesArr: StateProperties[] = [];
 
       // #todo in this .map breed name duplications are currently possible
 
