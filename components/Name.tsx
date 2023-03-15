@@ -6,6 +6,7 @@ import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HardMode } from "./HardMode";
+import { Div } from "./placeholders/Div";
 import { Score } from "./Score";
 
 export default function Name({ score, setScore, attempts, setAttempts }: ScoringProps) {
@@ -61,29 +62,36 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
       <Score score={score} attempts={attempts} />
       <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
       <div style={{ height: "40%", width: "auto" }}>
-        <img
-          style={{
-            height: "250px",
-            objectFit: "contain",
-            borderWidth: "2px",
-            borderColor: "white",
-            borderStyle: "solid",
-          }}
-          src={randomImg}
-          alt={""}
-        />
+        {randomImg ? (
+          <img
+            style={{
+              height: "250px",
+              objectFit: "contain",
+              borderWidth: "2px",
+              borderColor: "white",
+              borderStyle: "solid",
+            }}
+            src={randomImg}
+          />
+        ) : (
+          <Div />
+        )}
       </div>
-      <div>
+      <div style={{ height: "54px" }}>
         {namesArr.length > 0
           ? namesArr.map((name) => {
               const playerGuess = name.breed;
               return (
-                <button onClick={() => handleClick(playerGuess)} key={name.id}>
+                <button
+                  style={{ margin: "none" }}
+                  onClick={() => handleClick(playerGuess)}
+                  key={name.id}
+                >
                   {name.breed}
                 </button>
               );
             })
-          : "Loading..."}
+          : null}
       </div>
     </>
   );

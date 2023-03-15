@@ -6,6 +6,7 @@ import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HardMode } from "./HardMode";
+import { Frames } from "./placeholders/Frames";
 import { Score } from "./Score";
 
 export default function Photo({ score, setScore, attempts, setAttempts }: ScoringProps) {
@@ -61,21 +62,33 @@ export default function Photo({ score, setScore, attempts, setAttempts }: Scorin
     <>
       <Score score={score} attempts={attempts} />
       <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
-      {correctName ? <button>{correctName}</button> : null}
-      <ul style={{ display: "flex", flexDirection: "row", gap: "10px", listStyle: "none" }}>
-        {imgArr.length > 0
-          ? imgArr.map((img) => {
+      <div style={{ height: "54px" }}>
+        {correctName ? <button style={{ margin: "none" }}>{correctName}</button> : null}
+      </div>
+      <div>
+        <ul
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "10px",
+            listStyle: "none",
+          }}
+        >
+          {imgArr.length > 0 ? (
+            imgArr.map((img) => {
               const playerGuess = img.breed;
               return (
                 <li key={img.id}>
                   <img
                     onClick={() => handleClick(playerGuess)}
                     style={{
-                      height: "100px",
+                      height: "150px",
                       objectFit: "fill",
                       borderWidth: "2px",
                       borderColor: "white",
                       borderStyle: "solid",
+                      cursor: "pointer",
                     }}
                     src={img.url}
                     alt={img.breed}
@@ -83,8 +96,11 @@ export default function Photo({ score, setScore, attempts, setAttempts }: Scorin
                 </li>
               );
             })
-          : "Loading..."}
-      </ul>
+          ) : (
+            <Frames />
+          )}
+        </ul>
+      </div>
     </>
   );
 }
