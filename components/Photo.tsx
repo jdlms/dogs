@@ -1,27 +1,30 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Dog } from "@/interfaces/dog";
+import { DogObjs } from "@/interfaces/dogObjs";
+import { ScoringProps } from "@/interfaces/scoringProps";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { HardMode } from "./HardMode";
 import { Score } from "./Score";
 
-export default function Photo({ score, setScore, attempts, setAttempts }) {
-  const [randomName, setRandomName] = useState([]);
-
-  const [imgArr, setImgArr] = useState([]);
+export default function Photo({ score, setScore, attempts, setAttempts }: ScoringProps) {
+  const [correctName, setCorrectName] = useState("");
+  const [imgArr, setImgArr] = useState<DogObjs[]>([]);
   const [correctImg, setCorrectImg] = useState("");
-
   const [difficultyNum, setDifficultyNum] = useState(5);
+  const [guess, setGuess] = useState(false);
 
   const getRandomName = async function () {
     try {
-      console.log("hitting the api...");
       const res = await axios.get("/api/getDogs");
-      setRandomName(res.data[0].breeds[0].name);
+      setCorrectName(res.data[0].breeds[0].name);
       setCorrectImg(res.data[0].url);
 
-      let dogImgArr: object[] = [];
+      let dogImgArr: DogObjs[] = [];
 
-      res.data.map((dogObj) => {
-        if (dogImgArr.includes(dogObj.url) === false && dogImgArr.length < difficultyNum) {
+      res.data.map((dogObj: Dog) => {
+        if (dogImgArr.length < difficultyNum) {
           return dogImgArr.push({
             url: dogObj.url,
             breed: dogObj.breeds[0].name,
@@ -36,6 +39,14 @@ export default function Photo({ score, setScore, attempts, setAttempts }) {
     }
   };
 
+  const handleClick = (playerGuess: string) => {
+    const newScore = score + 1;
+    const attemptCount = attempts + 1;
+    setGuess(!guess);
+    setAttempts(attemptCount);
+    return playerGuess === correctName ? setScore(newScore) : null;
+  };
+
   useEffect(() => {
     let isSubscribed = true;
     if (isSubscribed) {
@@ -44,19 +55,34 @@ export default function Photo({ score, setScore, attempts, setAttempts }) {
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [guess]);
 
   return (
     <>
       <Score score={score} attempts={attempts} />
-      {randomName ? <button>{randomName}</button> : null}
+      <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
+      {correctName ? <button>{correctName}</button> : null}
       <ul style={{ display: "flex", flexDirection: "row", gap: "10px", listStyle: "none" }}>
         {imgArr.length > 0
-          ? imgArr.map((img) => (
-              <li key={img.id}>
-                <img style={{ height: "100px", objectFit: "fill" }} src={img.url} alt={img.breed} />
-              </li>
-            ))
+          ? imgArr.map((img) => {
+              const playerGuess = img.breed;
+              return (
+                <li key={img.id}>
+                  <img
+                    onClick={() => handleClick(playerGuess)}
+                    style={{
+                      height: "100px",
+                      objectFit: "fill",
+                      borderWidth: "2px",
+                      borderColor: "white",
+                      borderStyle: "solid",
+                    }}
+                    src={img.url}
+                    alt={img.breed}
+                  />
+                </li>
+              );
+            })
           : "Loading..."}
       </ul>
     </>
