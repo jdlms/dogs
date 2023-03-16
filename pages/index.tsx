@@ -33,7 +33,12 @@ export default function Home() {
       ) : null}
 
       {displayName || displayPhoto ? (
-        <Back setDisplayName={setDisplayName} setDisplayPhoto={setDisplayPhoto} />
+        <Back
+          setDisplayName={setDisplayName}
+          setDisplayPhoto={setDisplayPhoto}
+          setScore={setScore}
+          setAttempts={setAttempts}
+        />
       ) : null}
     </>
   );

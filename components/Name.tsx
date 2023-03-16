@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { HardMode } from "./HardMode";
 import { Div } from "./placeholders/Div";
 import { Score } from "./Score";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export default function Name({ score, setScore, attempts, setAttempts }: ScoringProps) {
   const [randomImg, setRandomImg] = useState("");
@@ -74,7 +75,7 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
             src={randomImg}
           />
         ) : (
-          <Div />
+          <ScaleLoader color="#ffffff" />
         )}
       </div>
       <div style={{ height: "54px" }}>

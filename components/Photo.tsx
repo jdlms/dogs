@@ -5,6 +5,7 @@ import { ScoringProps } from "@/interfaces/scoringProps";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import { HardMode } from "./HardMode";
 import { Frames } from "./placeholders/Frames";
 import { Score } from "./Score";
@@ -75,7 +76,7 @@ export default function Photo({ score, setScore, attempts, setAttempts }: Scorin
             listStyle: "none",
           }}
         >
-          {imgArr.length > 0 ? (
+          {imgArr.length === difficultyNum ? (
             imgArr.map((img) => {
               const playerGuess = img.breed;
               return (
@@ -97,7 +98,7 @@ export default function Photo({ score, setScore, attempts, setAttempts }: Scorin
               );
             })
           ) : (
-            <Frames />
+            <ScaleLoader color="#ffffff" />
           )}
         </ul>
       </div>

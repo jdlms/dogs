@@ -1,9 +1,32 @@
-export function Score({ score, attempts }) {
+import styled from "styled-components";
+
+interface Props {
+  score: number;
+  attempts: number;
+}
+
+const Span = styled.div`
+  border-width: 1px;
+  border-color: white;
+  border-style: solid;
+  display: inline;
+  padding: 1px;
+  color: red;
+`;
+export function Score({ score, attempts }: Props) {
   return (
     <>
-      <h3>
-        Score: {score} / Attempts: {attempts}
-      </h3>
+      <h4
+        style={{
+          display: "inline",
+          borderWidth: "3px",
+          borderColor: "white",
+          borderStyle: "solid",
+          padding: "5px",
+        }}
+      >
+        Score <Span>{score}</Span> Attempts <Span>{attempts}</Span>
+      </h4>
     </>
   );
 }
