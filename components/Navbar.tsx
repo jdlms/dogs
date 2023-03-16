@@ -3,7 +3,7 @@ export function Navbar() {
     <>
       <nav
         style={{
-          // borderBottom: "1px solid white",
+          borderBottom: "1px solid white",
           paddingBottom: ".3rem",
           display: "flex",
           flexDirection: "row",
@@ -38,7 +38,7 @@ export function Navbar() {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            width: "5.8rem",
+            width: "9rem",
           }}
         >
           <div
@@ -49,7 +49,7 @@ export function Navbar() {
               paddingRight: ".5rem",
             }}
           >
-            name
+            by name
           </div>
           <div
             style={{
@@ -58,7 +58,7 @@ export function Navbar() {
               paddingLeft: ".5rem",
             }}
           >
-            photo
+            by photo
           </div>
         </div>
       </nav>
