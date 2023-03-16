@@ -15,8 +15,6 @@ export default function Home() {
 
   return (
     <>
-      <h1>🐶 Guess that Dog!</h1>
-
       {!displayName && !displayPhoto ? (
         <>
           <button onClick={handleNameClick}>By name</button>
