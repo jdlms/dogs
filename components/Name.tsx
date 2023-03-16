@@ -9,6 +9,7 @@ import { HardMode } from "./HardMode";
 import { Div } from "./placeholders/Div";
 import { Score } from "./Score";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import Image from "next/image";
 
 export default function Name({ score, setScore, attempts, setAttempts }: ScoringProps) {
   const [randomImg, setRandomImg] = useState("");
@@ -64,15 +65,18 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
       <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
       <div style={{ height: "40%", width: "auto" }}>
         {randomImg ? (
-          <img
+          <Image
             style={{
-              height: "250px",
+              // height: "250px",
               objectFit: "contain",
               borderWidth: "2px",
               borderColor: "white",
               borderStyle: "solid",
             }}
             src={randomImg}
+            height={150}
+            width={228}
+            alt={""}
           />
         ) : (
           <ScaleLoader color="#ffffff" />

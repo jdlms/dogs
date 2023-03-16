@@ -4,10 +4,11 @@ import { DogObjs } from "@/interfaces/dogObjs";
 import { ScoringProps } from "@/interfaces/scoringProps";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { HardMode } from "./HardMode";
-import { Frames } from "./placeholders/Frames";
+
 import { Score } from "./Score";
 
 export default function Photo({ score, setScore, attempts, setAttempts }: ScoringProps) {
@@ -81,10 +82,10 @@ export default function Photo({ score, setScore, attempts, setAttempts }: Scorin
               const playerGuess = img.breed;
               return (
                 <li key={img.id}>
-                  <img
+                  <Image
                     onClick={() => handleClick(playerGuess)}
                     style={{
-                      height: "150px",
+                      // height: "150px",
                       objectFit: "fill",
                       borderWidth: "2px",
                       borderColor: "white",
@@ -93,6 +94,8 @@ export default function Photo({ score, setScore, attempts, setAttempts }: Scorin
                     }}
                     src={img.url}
                     alt={img.breed}
+                    height={150}
+                    width={200}
                   />
                 </li>
               );
