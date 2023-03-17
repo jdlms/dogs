@@ -5,18 +5,20 @@ import { ScoringProps } from "@/interfaces/scoringProps";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { HardMode } from "./HardMode";
-import { Div } from "./placeholders/Div";
-import { Score } from "./Score";
+import { HardMode } from "../components/HardMode";
+import { Score } from "../components/Score";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Image from "next/image";
+import { useScoreContext } from "@/context/score";
 
-export default function Name({ score, setScore, attempts, setAttempts }: ScoringProps) {
+export default function Name() {
+  const scoreObj = useScoreContext();
+
   const [randomImg, setRandomImg] = useState("");
   const [namesArr, setNamesArr] = useState<DogObjs[]>([]);
   const [correctName, setCorrectName] = useState("");
   const [guess, setGuess] = useState(false);
-  const [difficultyNum, setDifficultyNum] = useState(5);
+  const [difficultyNum, setDifficultyNum] = useState(6);
 
   const getRandomImg = async function () {
     try {
@@ -42,11 +44,11 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
   };
 
   const handleClick = (playerGuess: string) => {
-    const newScore = score + 1;
-    const attemptCount = attempts + 1;
+    const newScore = scoreObj.score + 1;
+    const attemptCount = scoreObj.attempts + 1;
     setGuess(!guess);
-    setAttempts(attemptCount);
-    return playerGuess === correctName ? setScore(newScore) : null;
+    scoreObj.setAttempts(attemptCount);
+    return playerGuess === correctName ? scoreObj.setScore(newScore) : null;
   };
 
   useEffect(() => {
@@ -61,8 +63,7 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
 
   return (
     <>
-      <Score score={score} attempts={attempts} />
-      <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
+      <Score score={scoreObj.score} attempts={scoreObj.attempts} />
       <div style={{ height: "40%", width: "auto" }}>
         {randomImg ? (
           <Image
@@ -82,7 +83,7 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
           <ScaleLoader color="#ffffff" />
         )}
       </div>
-      <div style={{ height: "54px" }}>
+      <div style={{ display: "inline", alignItems: "center" }}>
         {namesArr.length > 0
           ? namesArr.map((name) => {
               const playerGuess = name.breed;
@@ -98,6 +99,7 @@ export default function Name({ score, setScore, attempts, setAttempts }: Scoring
             })
           : null}
       </div>
+      <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
     </>
   );
 }

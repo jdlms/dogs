@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function Navbar() {
   return (
     <>
@@ -18,9 +20,7 @@ export function Navbar() {
               marginLeft: ".5rem",
               display: "inline",
             }}
-          >
-            {/* Guess that dog */}
-          </div>
+          ></div>
           <span
             style={{
               fontSize: "1.5rem",
@@ -29,7 +29,7 @@ export function Navbar() {
               display: "inline-block",
             }}
           >
-            🐶
+            <Link href="/">🐶</Link>
           </span>
         </div>
         <div
@@ -38,7 +38,7 @@ export function Navbar() {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            width: "9rem",
+            width: "19rem",
           }}
         >
           <div
@@ -49,16 +49,40 @@ export function Navbar() {
               paddingRight: ".5rem",
             }}
           >
-            by name
+            <Link href="breeds">breeds</Link>
           </div>
           <div
             style={{
               display: "inline",
               fontSize: ".9rem",
+              borderRight: "1px solid white",
+              paddingRight: ".5rem",
               paddingLeft: ".5rem",
             }}
           >
-            by photo
+            <Link href="/name">by name</Link>
+          </div>
+          <div
+            style={{
+              display: "inline",
+              fontSize: ".9rem",
+              borderRight: "1px solid white",
+              paddingRight: ".5rem",
+              paddingLeft: ".5rem",
+            }}
+          >
+            <Link href="/photo">by photo</Link>
+          </div>
+          <div
+            style={{
+              display: "inline",
+              fontSize: ".9rem",
+
+              paddingRight: ".5rem",
+              paddingLeft: ".5rem",
+            }}
+          >
+            <Link href="/collection">collection</Link>
           </div>
         </div>
       </nav>
