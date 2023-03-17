@@ -99,7 +99,8 @@ export default function Name() {
             })
           : null}
       </div>
-      <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
+      {/* <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} /> */}
+      {/* #todo hardMode  */}
     </>
   );
 }

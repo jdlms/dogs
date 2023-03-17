@@ -85,6 +85,7 @@ export default function Photo() {
               return (
                 <li key={img.id}>
                   <Image
+                    className="dogPic"
                     onClick={() => handleClick(playerGuess)}
                     style={{
                       // height: "150px",
@@ -106,8 +107,8 @@ export default function Photo() {
             <ScaleLoader color="#ffffff" />
           )}
         </ul>
-        <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} />
       </div>
+      {/* <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} /> */}
     </>
   );
 }

@@ -7,7 +7,7 @@ export function HardMode({ setDifficultyNum, setGuess, guess }: DifficultyProps)
   };
 
   return (
-    <div>
+    <div style={{ alignSelf: "flex-end", flexGrow: 1 }}>
       <button onClick={() => hardModeOn()}>Hard Mode</button>
     </div>
   );
