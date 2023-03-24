@@ -25,7 +25,7 @@ export function Score({ score, attempts }: Props) {
           padding: "5px",
         }}
       >
-        Score <Span>{score}</Span> Attempts <Span>{attempts}</Span>
+        Current Points <Span>{score}</Span>
       </h4>
     </>
   );
