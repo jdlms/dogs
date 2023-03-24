@@ -1,23 +1,35 @@
 import { Modal } from "antd";
 
-export function ModalDetails({ isModalOpen, setIsModalOpen, correctName }) {
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
+export function ModalDetails({
+  isModalOpen,
+  setIsModalOpen,
+  modalText,
+  isGuessCorrect,
+  setIsGuessCorrect,
+}) {
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsGuessCorrect(false);
   };
 
-  console.log(correctName);
+  const correctDog = modalText.breeds[0];
+
+  const temperament = correctDog.temperament.replace(/\b\w/g, (match: string) =>
+    match.toLowerCase()
+  );
+
+  const bredFor = correctDog.bred_for.replace(/\b\w/g, (match: string) => match.toLowerCase());
 
   return (
     <>
-      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title={isGuessCorrect ? "✔️" : "❌"}
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={null}
+      >
         <p>
-          The {correctName.breeds[0].name} is known to be {correctName.breeds[0].temperament} and was
-          bred for
-          {correctName.breeds[0].bred_for}
+          The {correctDog.name} is known to be {temperament} and was bred for {bredFor}.
         </p>
       </Modal>
     </>

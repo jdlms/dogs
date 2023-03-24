@@ -20,8 +20,9 @@ export default function Name() {
   const [correctName, setCorrectName] = useState({});
   const [guess, setGuess] = useState(false);
   const [difficultyNum, setDifficultyNum] = useState(6);
-
+  const [modalText, setModalText] = useState({});
   const [isModalOpen, setisModalOpen] = useState(false);
+  const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
   const getRandomImg = async function () {
     try {
@@ -52,7 +53,11 @@ export default function Name() {
     const attemptCount = scoreObj.attempts + 1;
     setGuess(!guess);
     scoreObj.setAttempts(attemptCount);
-    playerGuess === correctName.breeds[0].name ? scoreObj.setScore(newScore) : null;
+    setModalText(correctName);
+    if (playerGuess === correctName.breeds[0].name) {
+      scoreObj.setScore(newScore);
+      setIsGuessCorrect(true);
+    } else null;
     return setisModalOpen(true);
   };
 
@@ -113,7 +118,9 @@ export default function Name() {
         <ModalDetails
           isModalOpen={isModalOpen}
           setIsModalOpen={setisModalOpen}
-          correctName={correctName}
+          modalText={modalText}
+          isGuessCorrect={isGuessCorrect}
+          setIsGuessCorrect={setIsGuessCorrect}
         />
       )}
     </>
