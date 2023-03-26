@@ -5,7 +5,7 @@ export function Navbar() {
     <>
       <nav
         style={{
-          borderBottom: "1px solid white",
+          borderBottom: "2px solid white",
           paddingBottom: ".3rem",
           display: "flex",
           flexDirection: "row",
@@ -34,23 +34,12 @@ export function Navbar() {
         </div>
         <div
           style={{
-            marginRight: "1rem",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            width: "19rem",
+            width: "16rem",
           }}
         >
-          <div
-            style={{
-              display: "inline",
-              fontSize: ".9rem",
-              borderRight: "1px solid white",
-              paddingRight: ".5rem",
-            }}
-          >
-            <Link href="breeds">breeds</Link>
-          </div>
           <div
             style={{
               display: "inline",

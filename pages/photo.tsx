@@ -32,7 +32,8 @@ export default function Photo() {
       setCorrectImg(res.data[0].url);
       let dogImgArr: DogObjs[] = [];
       res.data.map((dogObj: Dog) => {
-        if (dogImgArr.length < difficultyNum) {
+        const dogName = dogObj.breeds[0].name;
+        if (!dogImgArr.includes(dogName) && dogImgArr.length < difficultyNum) {
           return dogImgArr.push({
             url: dogObj.url,
             breed: dogObj.breeds[0].name,
