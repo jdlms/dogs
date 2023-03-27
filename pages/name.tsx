@@ -13,11 +13,11 @@ import { useScoreContext } from "@/context/score";
 import { ModalDetails } from "@/components/ModalDetails";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
+const player = { lifetimePlayerScore: 0, correctBreedIds: [] };
+
 export default function Name() {
   const scoreObj = useScoreContext();
-  const [playerData, setPlayerData] = useLocalStorage('current-player', {playerScore: 0})
-
-
+  const [playerData, setPlayerData] = useLocalStorage("current-player", player);
 
   const [randomImg, setRandomImg] = useState("");
   const [namesArr, setNamesArr] = useState<DogObjs[]>([]);
@@ -33,7 +33,6 @@ export default function Name() {
       const res = await axios.get("/api/getDogs");
       setRandomImg(res.data[0].url);
       setCorrectName(res.data[0]);
-      console.log(res.data);
       let dogNamesArr: DogObjs[] = [];
       // #todo in this .map breed name duplications are currently possible
       res.data.filter((dogObj: Dog) => {
@@ -62,6 +61,11 @@ export default function Name() {
     setModalText(correctName);
     if (playerGuess.breed === correctName.breeds[0].name) {
       scoreObj.setScore(newScore);
+      const updatedPlayerData = {
+        lifetimePlayerScore: (playerData.lifetimePlayerScore += 1),
+        correctBreedIds: [...playerData.correctBreedIds, playerGuess.id],
+      };
+      setPlayerData(updatedPlayerData);
       setIsGuessCorrect(true);
     } else null;
     return setisModalOpen(true);
@@ -76,6 +80,9 @@ export default function Name() {
       isSubscribed = false;
     };
   }, [guess]);
+
+  console.log(playerData);
+  console.log(scoreObj);
 
   return (
     <>

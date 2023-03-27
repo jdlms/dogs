@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
 
-export const useLocalStorage = (storageKey: string, fallbackState: { playerScore: number }) => {
-  console.log(storageKey, fallbackState);
-  const [value, setValue] = useState(
-    JSON.parse(localStorage.getItem(storageKey)!) ?? fallbackState
-  );
+export const useLocalStorage = (
+  storageKey: string,
+  fallbackState: { lifetimePlayerScore: number; correctBreedIds: string[] }
+) => {
+  const [value, setValue] = useState(() => {
+    if (!!window) {
+      const item = window.localStorage.getItem(storageKey);
+      return item ? JSON.parse(item) : fallbackState;
+    }
+    return fallbackState;
+  });
 
   useEffect(() => {
-    !!window ? localStorage.setItem(storageKey, JSON.stringify(value)) : null;
+    if (!!window) {
+      window.localStorage.setItem(storageKey, JSON.stringify(value));
+    }
   }, [value, storageKey]);
 
-  return [value, setValue];
+  return [value, setValue] as const;
 };
 
+// track player guesses - 5 guesses means come back tomorrow
+// track current time and amount of time until 12am at user location, store in local storage
+// if player guesses dog correctly, add to collection, store in local storage
 
-//https://upmostly.com/next-js/using-localstorage-in-next-js
-
- // track player guesses - 5 guesses means come back tomorrow
- // track current time and amount of time until 12am at user location, store in local storage
- // if player guesses dog correctly, add to collection, store in local storage
-
- // https://www.robinwieruch.de/local-storage-react/
+// https://www.robinwieruch.de/local-storage-react/
