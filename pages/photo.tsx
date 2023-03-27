@@ -23,8 +23,6 @@ export default function Photo() {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
-  console.log(modalText);
-
   const getRandomName = async function () {
     try {
       const res = await axios.get("/api/getDogs");
@@ -37,7 +35,7 @@ export default function Photo() {
           return dogImgArr.push({
             url: dogObj.url,
             breed: dogObj.breeds[0].name,
-            id: crypto.randomUUID(),
+            id: dogObj.id,
           });
         }
       });
@@ -48,13 +46,13 @@ export default function Photo() {
     }
   };
 
-  const handleClick = (playerGuess: string) => {
+  const handleClick = (playerGuess: { url: string; breed: string; id: string }) => {
     const newScore = scoreObj.score + 1;
     const attemptCount = scoreObj.attempts + 1;
     setGuess(!guess);
     scoreObj.setAttempts(attemptCount);
     setModalText(correctName);
-    if (playerGuess === correctName.breeds[0].name) {
+    if (playerGuess.breed === correctName.breeds[0].name) {
       scoreObj.setScore(newScore);
       setIsGuessCorrect(true);
     } else null;
@@ -96,7 +94,7 @@ export default function Photo() {
             >
               {imgArr.length === difficultyNum ? (
                 imgArr.map((img) => {
-                  const playerGuess = img.breed;
+                  const playerGuess = img;
                   return (
                     <li key={img.id}>
                       <Image

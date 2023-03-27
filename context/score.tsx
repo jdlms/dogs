@@ -17,7 +17,7 @@ export default function ScoreWrapper({ children }: any) {
     };
   }, [router.pathname]);
 
-  console.log(score, attempts);
+ 
 
   return (
     <>

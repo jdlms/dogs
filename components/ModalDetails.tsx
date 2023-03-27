@@ -14,7 +14,7 @@ export function ModalDetails({
 
   const correctDog = modalText.breeds[0];
 
-  console.log(modalText);
+
   const temperament = correctDog.temperament.replace(/\b\w/g, (match: string) =>
     match.toLowerCase()
   );

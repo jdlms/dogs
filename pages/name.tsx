@@ -11,9 +11,13 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 import Image from "next/image";
 import { useScoreContext } from "@/context/score";
 import { ModalDetails } from "@/components/ModalDetails";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export default function Name() {
   const scoreObj = useScoreContext();
+  const [playerData, setPlayerData] = useLocalStorage('current-player', {playerScore: 0})
+
+
 
   const [randomImg, setRandomImg] = useState("");
   const [namesArr, setNamesArr] = useState<DogObjs[]>([]);
@@ -38,7 +42,7 @@ export default function Name() {
           return dogNamesArr.push({
             url: dogObj.url,
             breed: dogObj.breeds[0].name,
-            id: crypto.randomUUID(),
+            id: dogObj.id,
           });
         }
       });
@@ -49,13 +53,14 @@ export default function Name() {
     }
   };
 
-  const handleClick = (playerGuess: string) => {
+  const handleClick = (playerGuess: { url: string; breed: string; id: string }) => {
+    console.log(playerGuess);
     const newScore = scoreObj.score + 1;
     const attemptCount = scoreObj.attempts + 1;
     setGuess(!guess);
     scoreObj.setAttempts(attemptCount);
     setModalText(correctName);
-    if (playerGuess === correctName.breeds[0].name) {
+    if (playerGuess.breed === correctName.breeds[0].name) {
       scoreObj.setScore(newScore);
       setIsGuessCorrect(true);
     } else null;
@@ -99,7 +104,7 @@ export default function Name() {
           <div style={{ display: "inline", alignItems: "center" }}>
             {namesArr.length > 0
               ? namesArr.map((name) => {
-                  const playerGuess = name.breed;
+                  const playerGuess = name;
                   return (
                     <button
                       style={{ margin: "none" }}
