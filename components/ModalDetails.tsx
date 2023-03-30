@@ -14,11 +14,10 @@ export function ModalDetails({
 
   const correctDog = modalText.breeds[0];
 
-
   const temperament = correctDog.temperament.replace(/\b\w/g, (match: string) =>
     match.toLowerCase()
   );
-
+  // #todo not all dogs have bred_for
   const bredFor = correctDog.bred_for.replace(/\b\w/g, (match: string) => match.toLowerCase());
 
   return (
@@ -31,8 +30,8 @@ export function ModalDetails({
       >
         <p>
           The <span style={{ fontWeight: "bold" }}>{correctDog.name}</span> is known to be{" "}
-          {temperament} and was bred for {bredFor}. They typically live for{" "}
-          {correctDog.life_span}, have a height of {correctDog.height.imperial} inches and weight{" "}
+          {temperament} and was bred for {bredFor}. They typically live for {correctDog.life_span},
+          have a height of {correctDog.height.imperial} inches and weight{" "}
           {correctDog.weight.imperial} pounds.
         </p>
       </Modal>

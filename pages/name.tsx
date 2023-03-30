@@ -28,7 +28,7 @@ export default function Name() {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
-  console.log(player);
+  console.log("player obj", playerData);
 
   const getRandomImg = async function () {
     try {
@@ -56,20 +56,23 @@ export default function Name() {
 
   const handleClick = (playerGuess: { url: string; breed: string; id: string }) => {
     console.log(playerGuess);
-    const newScore = scoreObj.score + 1;
-    const attemptCount = scoreObj.attempts + 1;
+    const newScore = (scoreObj.score += 1);
+    const attemptCount = (scoreObj.attempts += 1);
     setGuess(!guess);
     scoreObj.setAttempts(attemptCount);
     setModalText(correctName);
     if (playerGuess.breed === correctName.breeds[0].name) {
+      console.log(scoreObj);
       scoreObj.setScore(newScore);
-      const addBreedId = playerData.correctBreedsIds.push(playerGuess.id);
+
       const updatedPlayerData = {
-        lifetimePlayerGuesses: (playerData.lifetimePlayerScore += 1),
+        lifetimePlayerGuesses: scoreObj.score,
         lifetimePlayerScore: (playerData.lifetimePlayerScore += 1),
-        correctBreedIds: addBreedId,
+        correctBreedIds: [...playerData.correctBreedIds],
       };
+      updatedPlayerData.correctBreedIds.push(playerGuess.id);
       setPlayerData(updatedPlayerData);
+
       setIsGuessCorrect(true);
     } else null;
     return setisModalOpen(true);
@@ -84,9 +87,6 @@ export default function Name() {
       isSubscribed = false;
     };
   }, [guess]);
-
-  console.log(playerData);
-  console.log(scoreObj);
 
   return (
     <>
