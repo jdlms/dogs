@@ -13,11 +13,11 @@ import { useScoreContext } from "@/context/score";
 import { ModalDetails } from "@/components/ModalDetails";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
-const player = { lifetimePlayerScore: 0, correctBreedIds: [] };
+const player = { lifetimePlayerGuesses: 0, lifetimePlayerScore: 0, correctBreedIds: [] };
 
 export default function Name() {
   const scoreObj = useScoreContext();
-  const [playerData, setPlayerData] = useLocalStorage("current-player", player);
+  const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
 
   const [randomImg, setRandomImg] = useState("");
   const [namesArr, setNamesArr] = useState<DogObjs[]>([]);
@@ -27,6 +27,8 @@ export default function Name() {
   const [modalText, setModalText] = useState({});
   const [isModalOpen, setisModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
+
+  console.log(player);
 
   const getRandomImg = async function () {
     try {
@@ -61,9 +63,11 @@ export default function Name() {
     setModalText(correctName);
     if (playerGuess.breed === correctName.breeds[0].name) {
       scoreObj.setScore(newScore);
+      const addBreedId = playerData.correctBreedsIds.push(playerGuess.id);
       const updatedPlayerData = {
+        lifetimePlayerGuesses: (playerData.lifetimePlayerScore += 1),
         lifetimePlayerScore: (playerData.lifetimePlayerScore += 1),
-        correctBreedIds: [...playerData.correctBreedIds, playerGuess.id],
+        correctBreedIds: addBreedId,
       };
       setPlayerData(updatedPlayerData);
       setIsGuessCorrect(true);
