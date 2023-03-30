@@ -5,7 +5,7 @@ interface Props {
   attempts: number;
 }
 
-const Span = styled.div`
+export const Span = styled.div`
   border-width: 1px;
   border-color: white;
   border-style: solid;

@@ -13,7 +13,7 @@ import { useScoreContext } from "@/context/score";
 import { ModalDetails } from "@/components/ModalDetails";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
-const player = { lifetimePlayerGuesses: 0, lifetimePlayerScore: 0, correctBreedIds: [] };
+export const player = { lifetimePlayerGuesses: 0, lifetimePlayerScore: 0, correctBreedIds: [] };
 
 export default function Name() {
   const scoreObj = useScoreContext();
@@ -65,16 +65,23 @@ export default function Name() {
       console.log(scoreObj);
       scoreObj.setScore(newScore);
 
-      const updatedPlayerData = {
-        lifetimePlayerGuesses: scoreObj.score,
-        lifetimePlayerScore: (playerData.lifetimePlayerScore += 1),
+      const playerDataWhenCorrect = {
+        lifetimePlayerGuesses: ++playerData.lifetimePlayerGuesses,
+        lifetimePlayerScore: ++playerData.lifetimePlayerScore,
         correctBreedIds: [...playerData.correctBreedIds],
       };
-      updatedPlayerData.correctBreedIds.push(playerGuess.id);
-      setPlayerData(updatedPlayerData);
+      playerDataWhenCorrect.correctBreedIds.push(playerGuess.id);
+      setPlayerData(playerDataWhenCorrect);
 
       setIsGuessCorrect(true);
-    } else null;
+    } else {
+      const playerDataWhenWrong = {
+        lifetimePlayerGuesses: ++playerData.lifetimePlayerGuesses,
+        lifetimePlayerScore: playerData.lifetimePlayerScore,
+        correctBreedIds: [...playerData.correctBreedIds],
+      };
+      setPlayerData(playerDataWhenWrong);
+    }
     return setisModalOpen(true);
   };
 
