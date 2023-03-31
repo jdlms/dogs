@@ -9,7 +9,7 @@ export const useLocalStorage = (
   }
 ) => {
   const [value, setValue] = useState(() => {
-    if (!!window) {
+    if (typeof window !== "undefined") {
       const item = window.localStorage.getItem(storageKey);
       return item ? JSON.parse(item) : fallbackState;
     }
@@ -17,7 +17,7 @@ export const useLocalStorage = (
   });
 
   useEffect(() => {
-    if (!!window) {
+    if (typeof window !== undefined) {
       window.localStorage.setItem(storageKey, JSON.stringify(value));
     }
   }, [value, storageKey]);

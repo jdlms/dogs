@@ -1,11 +1,12 @@
-import { Span } from "@/components/Score";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import styled from "styled-components";
-import { player } from "./name";
+import { LandingScoring } from "@/components/LandingScoring";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
-  console.log(playerData);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   return (
     <div
@@ -24,11 +25,8 @@ export default function Home() {
         collection and gain points. Visit every day to grow your collection and improve your dog
         guessing skills!
       </p>
-      <div style={{ paddingBottom: "10px" }}>
-        You&apos;ve made a total of <Span>{playerData.lifetimePlayerGuesses}</Span> guesses and
-        collected <Span>{playerData.correctBreedIds.length}</Span> breeds. Your current lifetime
-        score is <Span>{playerData.lifetimePlayerScore}</Span>.
-      </div>
+      {/* put this in a component and then write a conditional for if window is not undefined. */}
+      {hasMounted ? <LandingScoring /> : ""}
     </div>
   );
 }
