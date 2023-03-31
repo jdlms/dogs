@@ -6,6 +6,9 @@ export const useLocalStorage = (
     lifetimePlayerGuesses: number;
     lifetimePlayerScore: number;
     correctBreedIds: string[];
+    dayOfTheWeek: string;
+    byNameAttempts: number;
+    byPhotoAttempts: number;
   }
 ) => {
   const [value, setValue] = useState(() => {

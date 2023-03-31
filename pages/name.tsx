@@ -1,19 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Dog } from "@/interfaces/dog";
 import { DogObjs } from "@/interfaces/dogObjs";
-
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HardMode } from "../components/HardMode";
-
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Image from "next/image";
 import { useScoreContext } from "@/context/score";
 import { ModalDetails } from "@/components/ModalDetails";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-
-export const player = { lifetimePlayerGuesses: 0, lifetimePlayerScore: 0, correctBreedIds: [] };
+import { player } from "@/lib/player";
+import { OutOfGuesses } from "@/components/OutOfGuesses";
 
 export default function Name() {
   const scoreObj = useScoreContext();
@@ -28,7 +26,42 @@ export default function Name() {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
-  console.log("player obj", playerData);
+  console.log(playerData);
+
+  const now = new Date().toString();
+  const currentDay = now.split(" ")[0];
+
+  useEffect(() => {
+    let isSubscribed = true;
+    if (isSubscribed) {
+      getRandomImg();
+      if (playerData.nameAttempts === 0) {
+        const playerDataNewDate = {
+          lifetimePlayerGuesses: playerData.lifetimePlayerGuesses,
+          lifetimePlayerScore: playerData.lifetimePlayerScore,
+          correctBreedIds: playerData.correctBreedIds,
+          dayOfWeek: currentDay,
+          byNameAttempts: playerData.byNameAttempts,
+          byPhotoAttempts: playerData.byPhotoAttempts,
+        };
+        setPlayerData(playerDataNewDate);
+      }
+      if (currentDay !== playerData.dayOfWeek) {
+        const playerDataNewDate = {
+          lifetimePlayerGuesses: playerData.lifetimePlayerGuesses,
+          lifetimePlayerScore: playerData.lifetimePlayerScore,
+          correctBreedIds: playerData.correctBreedIds,
+          dayOfWeek: currentDay,
+          byNameAttempts: 5,
+          byPhotoAttempts: playerData.byPhotoAttempts,
+        };
+        setPlayerData(playerDataNewDate);
+      }
+    }
+    return () => {
+      isSubscribed = false;
+    };
+  }, [guess]);
 
   const getRandomImg = async function () {
     try {
@@ -55,12 +88,12 @@ export default function Name() {
   };
 
   const handleClick = (playerGuess: { url: string; breed: string; id: string }) => {
-    console.log(playerGuess);
     const newScore = (scoreObj.score += 1);
     const attemptCount = (scoreObj.attempts += 1);
     setGuess(!guess);
     scoreObj.setAttempts(attemptCount);
     setModalText(correctName);
+
     if (playerGuess.breed === correctName.breeds[0].name) {
       console.log(scoreObj);
       scoreObj.setScore(newScore);
@@ -69,35 +102,32 @@ export default function Name() {
         lifetimePlayerGuesses: ++playerData.lifetimePlayerGuesses,
         lifetimePlayerScore: ++playerData.lifetimePlayerScore,
         correctBreedIds: [...playerData.correctBreedIds],
+        dayOfWeek: currentDay,
+        byNameAttempts: --playerData.byNameAttempts,
+        byPhotoAttempts: playerData.byPhotoAttempts,
       };
       playerDataWhenCorrect.correctBreedIds.push(playerGuess.id);
       setPlayerData(playerDataWhenCorrect);
-
       setIsGuessCorrect(true);
     } else {
       const playerDataWhenWrong = {
         lifetimePlayerGuesses: ++playerData.lifetimePlayerGuesses,
         lifetimePlayerScore: playerData.lifetimePlayerScore,
         correctBreedIds: [...playerData.correctBreedIds],
+        dayOfWeek: currentDay,
+        byNameAttempts: --playerData.byNameAttempts,
+        byPhotoAttempts: playerData.byPhotoAttempts,
       };
       setPlayerData(playerDataWhenWrong);
     }
     return setisModalOpen(true);
   };
 
-  useEffect(() => {
-    let isSubscribed = true;
-    if (isSubscribed) {
-      getRandomImg();
-    }
-    return () => {
-      isSubscribed = false;
-    };
-  }, [guess]);
-
   return (
     <>
-      {!isModalOpen ? (
+      {playerData.byNameAttempts === 0 && !isModalOpen ? (
+        <OutOfGuesses />
+      ) : !isModalOpen ? (
         <>
           <div style={{ height: "40%", width: "auto", marginTop: "4rem" }}>
             {randomImg ? (

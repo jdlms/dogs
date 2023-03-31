@@ -1,11 +1,12 @@
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { player } from "@/pages/name";
+import { player } from "@/lib/player";
+
 import { NoScoreYet } from "./NoScoreYet";
 import { Span } from "./Score";
 
 export function LandingScoring() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
-  console.log(playerData);
+
   return (
     <>
       {playerData.lifetimePlayerGuesses === 0 ? (
@@ -13,10 +14,11 @@ export function LandingScoring() {
       ) : (
         <div style={{ paddingBottom: "10px", borderBottom: "solid 1px white" }}>
           You&apos;ve made a total of <Span>{playerData.lifetimePlayerGuesses}</Span> guesses and
-          collected <Span>{playerData.correctBreedIds.length}</Span> breeds. Your current lifetime
-          score is <Span>{playerData.lifetimePlayerScore}</Span>.
+          collected <Span>{playerData.correctBreedIds.length}</Span> breeds.
         </div>
       )}
     </>
   );
 }
+
+// Your current lifetime score is <Span>{playerData.lifetimePlayerScore}</Span>.
