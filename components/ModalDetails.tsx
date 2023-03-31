@@ -1,4 +1,6 @@
+import { useScoreContext } from "@/context/score";
 import { Modal } from "antd";
+import { Score } from "./Score";
 
 export function ModalDetails({
   isModalOpen,
@@ -12,6 +14,7 @@ export function ModalDetails({
     setIsGuessCorrect(false);
   };
 
+  const scoreObj = useScoreContext();
   const correctDog = modalText.breeds[0];
 
   const temperament = correctDog.temperament.replace(/\b\w/g, (match: string) =>
@@ -28,12 +31,15 @@ export function ModalDetails({
         onCancel={handleCancel}
         footer={null}
       >
-        <p>
-          The <span style={{ fontWeight: "bold" }}>{correctDog.name}</span> is known to be{" "}
-          {temperament} and was bred for {bredFor}. They typically live for {correctDog.life_span},
-          have a height of {correctDog.height.imperial} inches and weight{" "}
-          {correctDog.weight.imperial} pounds.
-        </p>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <p>
+            The <span style={{ fontWeight: "bold" }}>{correctDog.name}</span> is known to be{" "}
+            {temperament} and was bred for {bredFor}. They typically live for {correctDog.life_span}
+            , have a height of {correctDog.height.imperial} inches and weight{" "}
+            {correctDog.weight.imperial} pounds.
+          </p>
+          <Score score={scoreObj.score} attempts={scoreObj.attempts} />
+        </div>
       </Modal>
     </>
   );

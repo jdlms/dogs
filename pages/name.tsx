@@ -6,7 +6,7 @@ import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HardMode } from "../components/HardMode";
-import { Score } from "../components/Score";
+
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Image from "next/image";
 import { useScoreContext } from "@/context/score";
@@ -99,8 +99,7 @@ export default function Name() {
     <>
       {!isModalOpen ? (
         <>
-          <Score score={scoreObj.score} attempts={scoreObj.attempts} />
-          <div style={{ height: "40%", width: "auto" }}>
+          <div style={{ height: "40%", width: "auto", marginTop: "4rem" }}>
             {randomImg ? (
               <Image
                 style={{
@@ -116,7 +115,9 @@ export default function Name() {
                 alt={""}
               />
             ) : (
-              <ScaleLoader color="#ffffff" />
+              <div style={{ marginTop: "4rem" }}>
+                <ScaleLoader color="#ffffff" />
+              </div>
             )}
           </div>
           <div style={{ display: "inline", alignItems: "center" }}>

@@ -20,12 +20,12 @@ export function Score({ score, attempts }: Props) {
         style={{
           display: "inline",
           borderWidth: "3px",
-          borderColor: "white",
+          borderColor: "#0f0f13",
           borderStyle: "solid",
           padding: "5px",
         }}
       >
-        Current Points <Span>{score}</Span>
+        Current points: <Span>{score}</Span>
       </h4>
     </>
   );
