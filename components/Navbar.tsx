@@ -10,6 +10,8 @@ export function Navbar() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         <div>
@@ -23,10 +25,13 @@ export function Navbar() {
           ></div>
           <span
             style={{
-              fontSize: "1.5rem",
+              fontSize: "2.5rem",
               fontWeight: "600",
               marginLeft: ".5rem",
               display: "inline-block",
+              transform: "rotate(1deg)",
+              marginTop: '-5px',
+              marginBottom: "-20px",
             }}
           >
             <Link href="/">🐶</Link>
