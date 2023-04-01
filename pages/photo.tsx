@@ -1,8 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ModalDetails } from "@/components/ModalDetails";
 import { useScoreContext } from "@/context/score";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Dog } from "@/interfaces/dog";
 import { DogObjs } from "@/interfaces/dogObjs";
+import { currentDay } from "@/lib/currentDay";
+import { handleGuessClick } from "@/lib/handleGuessClick";
+import { player } from "@/lib/player";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import Image from "next/image";
@@ -13,6 +17,7 @@ import { Score } from "../components/Score";
 
 export default function Photo() {
   const scoreObj = useScoreContext();
+  const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
 
   const [correctName, setCorrectName] = useState("");
   const [imgArr, setImgArr] = useState<DogObjs[]>([]);
@@ -22,6 +27,34 @@ export default function Photo() {
   const [modalText, setModalText] = useState({});
   const [isModalOpen, setisModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
+
+  useEffect(() => {
+    let isSubscribed = true;
+    if (isSubscribed) {
+      getRandomName();
+      if (playerData.nameAttempts === 0) {
+        const playerDataNewDate = {
+          ...playerData,
+          dayOfWeek: currentDay,
+          byNameAttempts: playerData.byNameAttempts,
+          byPhotoAttempts: playerData.byPhotoAttempts,
+        };
+        setPlayerData(playerDataNewDate);
+      }
+      if (currentDay !== playerData.dayOfWeek) {
+        const playerDataNewDate = {
+          ...playerData,
+          dayOfWeek: currentDay,
+          byNameAttempts: 5,
+          byPhotoAttempts: playerData.byPhotoAttempts,
+        };
+        setPlayerData(playerDataNewDate);
+      }
+    }
+    return () => {
+      isSubscribed = false;
+    };
+  }, [guess]);
 
   const getRandomName = async function () {
     try {
@@ -47,27 +80,19 @@ export default function Photo() {
   };
 
   const handleClick = (playerGuess: { url: string; breed: string; id: string }) => {
-    const newScore = scoreObj.score + 1;
-    const attemptCount = scoreObj.attempts + 1;
-    setGuess(!guess);
-    scoreObj.setAttempts(attemptCount);
-    setModalText(correctName);
-    if (playerGuess.breed === correctName.breeds[0].name) {
-      scoreObj.setScore(newScore);
-      setIsGuessCorrect(true);
-    } else null;
-    return setisModalOpen(true);
+    handleGuessClick(
+      playerGuess,
+      scoreObj,
+      guess,
+      setGuess,
+      setModalText,
+      correctName,
+      playerData,
+      setPlayerData,
+      setIsGuessCorrect,
+      setisModalOpen
+    );
   };
-
-  useEffect(() => {
-    let isSubscribed = true;
-    if (isSubscribed) {
-      getRandomName();
-    }
-    return () => {
-      isSubscribed = false;
-    };
-  }, [guess]);
 
   return (
     <>
