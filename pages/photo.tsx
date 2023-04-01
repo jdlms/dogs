@@ -15,6 +15,8 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 import { HardMode } from "../components/HardMode";
 import { Score } from "../components/Score";
 
+const component = "photo";
+
 export default function Photo() {
   const scoreObj = useScoreContext();
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
@@ -90,7 +92,8 @@ export default function Photo() {
       playerData,
       setPlayerData,
       setIsGuessCorrect,
-      setisModalOpen
+      setisModalOpen,
+      component
     );
   };
 

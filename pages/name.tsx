@@ -14,6 +14,8 @@ import { GuessName } from "@/components/GuessName";
 import { ModalDetails } from "@/components/ModalDetails";
 import { handleGuessClick } from "@/lib/handleGuessClick";
 
+const component = "name";
+
 export default function Name() {
   const scoreObj = useScoreContext();
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
@@ -90,7 +92,8 @@ export default function Name() {
       playerData,
       setPlayerData,
       setIsGuessCorrect,
-      setisModalOpen
+      setisModalOpen,
+      component
     );
   };
 

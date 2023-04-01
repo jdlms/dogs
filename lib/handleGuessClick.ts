@@ -10,7 +10,8 @@ export const handleGuessClick = (
   playerData,
   setPlayerData,
   setIsGuessCorrect,
-  setisModalOpen
+  setisModalOpen,
+  component
 ) => {
   const newScore = (scoreObj.score += 1);
   const attemptCount = (scoreObj.attempts += 1);
@@ -26,8 +27,10 @@ export const handleGuessClick = (
       lifetimePlayerScore: ++playerData.lifetimePlayerScore,
       correctBreedIds: [...playerData.correctBreedIds],
       dayOfWeek: currentDay,
-      byNameAttempts: --playerData.byNameAttempts,
-      byPhotoAttempts: playerData.byPhotoAttempts,
+      byNameAttempts:
+        component === "name" ? --playerData.byNameAttempts : playerData.byNameAttempts,
+      byPhotoAttempts:
+        component === "photo" ? --playerData.byPhotoAttempts : playerData.byPhotoAttempts,
     };
     playerDataWhenCorrect.correctBreedIds.push(playerGuess.id);
     setPlayerData(playerDataWhenCorrect);
@@ -38,8 +41,10 @@ export const handleGuessClick = (
       lifetimePlayerScore: playerData.lifetimePlayerScore,
       correctBreedIds: [...playerData.correctBreedIds],
       dayOfWeek: currentDay,
-      byNameAttempts: --playerData.byNameAttempts,
-      byPhotoAttempts: playerData.byPhotoAttempts,
+      byNameAttempts:
+        component === "name" ? --playerData.byNameAttempts : playerData.byNameAttempts,
+      byPhotoAttempts:
+        component === "photo" ? --playerData.byPhotoAttempts : playerData.byPhotoAttempts,
     };
     setPlayerData(playerDataWhenWrong);
   }
