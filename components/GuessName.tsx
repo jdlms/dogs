@@ -1,3 +1,4 @@
+import { Dog } from "@/interfaces/dog";
 import Image from "next/image";
 import { ScaleLoader } from "react-spinners";
 
@@ -27,15 +28,14 @@ export function GuessName({ randomImg, namesArr, handleClick }) {
       </div>
       <div style={{ display: "inline", alignItems: "center" }}>
         {namesArr.length > 0
-          ? namesArr.map((name) => {
-              const playerGuess = name;
+          ? namesArr.map((playerGuess: Dog) => {
               return (
                 <button
                   style={{ margin: "none" }}
                   onClick={() => handleClick(playerGuess)}
-                  key={name.id}
+                  key={playerGuess.id}
                 >
-                  {name.breed}
+                  {playerGuess.breeds[0].name}
                 </button>
               );
             })

@@ -1,7 +1,8 @@
+import { Dog } from "@/interfaces/dog";
 import { currentDay } from "./currentDay";
 
 export const handleGuessClick = (
-  playerGuess: { url: string; breed: string; id: string },
+  playerGuess: Dog,
   scoreObj,
   guess,
   setGuess,
@@ -19,7 +20,7 @@ export const handleGuessClick = (
   scoreObj.setAttempts(attemptCount);
   setModalText(correctName);
 
-  if (playerGuess.breed === correctName.breeds[0].name) {
+  if (playerGuess.breeds[0].name === correctName.breeds[0].name) {
     scoreObj.setScore(newScore);
 
     const playerDataWhenCorrect = {
@@ -32,7 +33,7 @@ export const handleGuessClick = (
       byPhotoAttempts:
         component === "photo" ? --playerData.byPhotoAttempts : playerData.byPhotoAttempts,
     };
-    playerDataWhenCorrect.correctBreedIds.push(playerGuess.id);
+    playerDataWhenCorrect.correctBreedIds.push(playerGuess);
     setPlayerData(playerDataWhenCorrect);
     setIsGuessCorrect(true);
   } else {

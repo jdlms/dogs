@@ -21,7 +21,7 @@ export default function Name() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
 
   const [randomImg, setRandomImg] = useState("");
-  const [namesArr, setNamesArr] = useState<DogObjs[]>([]);
+  const [namesArr, setNamesArr] = useState<Dog[]>([]);
   const [correctName, setCorrectName] = useState({});
   const [difficultyNum, setDifficultyNum] = useState(6);
   const [guess, setGuess] = useState(false);
@@ -62,17 +62,13 @@ export default function Name() {
       const res = await axios.get("/api/getDogs");
       setRandomImg(res.data[0].url);
       setCorrectName(res.data[0]);
-      console.log(correctName);
-      let dogNamesArr: DogObjs[] = [];
+
+      let dogNamesArr: Dog[] = [];
       // #todo in this .map breed name duplications are currently possible
       res.data.filter((dogObj: Dog) => {
         const dogName = dogObj.breeds[0].name;
         if (!dogNamesArr.includes(dogName) && dogNamesArr.length < difficultyNum) {
-          return dogNamesArr.push({
-            url: dogObj.url,
-            breed: dogObj.breeds[0].name,
-            id: dogObj.id,
-          });
+          return dogNamesArr.push(dogObj);
         }
       });
       shuffleArray(dogNamesArr);
@@ -82,7 +78,7 @@ export default function Name() {
     }
   };
 
-  const handleClick = (playerGuess: { url: string; breed: string; id: string }) => {
+  const handleClick = (playerGuess: Dog) => {
     handleGuessClick(
       playerGuess,
       scoreObj,
