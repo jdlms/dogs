@@ -9,7 +9,6 @@ export function GuessName({ randomImg, namesArr, handleClick }) {
         {randomImg ? (
           <Image
             style={{
-              // height: "250px",
               objectFit: "contain",
               borderWidth: "2px",
               borderColor: "white",

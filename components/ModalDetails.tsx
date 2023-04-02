@@ -61,7 +61,7 @@ export function ModalDetails({
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <p>
               The <span style={{ fontWeight: "bold" }}>{correctDog.name}</span> is known to be{" "}
-              {temperament} {bredFor ? `and was bred for {bredFor}.` : "."} They typically live for{" "}
+              {temperament} {bredFor ? `and was bred for ${bredFor}.` : "."} They typically live for{" "}
               {correctDog.life_span}, have a height of {correctDog.height.imperial} inches and
               weight {correctDog.weight.imperial} pounds.
             </p>
