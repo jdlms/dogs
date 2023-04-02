@@ -1,20 +1,20 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function getLotsOfDogs(req: NextApiRequest, res: NextApiResponse) {
+export async function getCollection(ids: string[]) {
   try {
     const axiosResponse = await axios.get(
       "https://api.thedogapi.com/v1/images/search?api_key=" + process.env.DOG_API_KEY,
       {
         params: {
           size: "small",
-          has_breeds: 1,
-          limit: 50,
+
+          breed_ids: "18,6",
         },
       }
     );
-    return res.status(200).send(axiosResponse.data);
+    return axiosResponse.data;
   } catch (error) {
-    return res.status(404).send("error");
+    console.error("There was an error", error);
   }
 }

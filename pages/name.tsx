@@ -62,6 +62,7 @@ export default function Name() {
       const res = await axios.get("/api/getDogs");
       setRandomImg(res.data[0].url);
       setCorrectName(res.data[0]);
+      console.log(correctName);
       let dogNamesArr: DogObjs[] = [];
       // #todo in this .map breed name duplications are currently possible
       res.data.filter((dogObj: Dog) => {
