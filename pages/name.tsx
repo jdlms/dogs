@@ -26,7 +26,7 @@ export default function Name() {
   const [difficultyNum, setDifficultyNum] = useState(6);
   const [guess, setGuess] = useState(false);
   const [modalText, setModalText] = useState({});
-  const [isModalOpen, setisModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function Name() {
       playerData,
       setPlayerData,
       setIsGuessCorrect,
-      setisModalOpen,
+      setIsModalOpen,
       component
     );
   };
@@ -103,7 +103,7 @@ export default function Name() {
       ) : (
         <ModalDetails
           isModalOpen={isModalOpen}
-          setIsModalOpen={setisModalOpen}
+          setIsModalOpen={setIsModalOpen}
           modalText={modalText}
           isGuessCorrect={isGuessCorrect}
           setIsGuessCorrect={setIsGuessCorrect}

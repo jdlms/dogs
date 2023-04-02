@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ModalDetails } from "@/components/ModalDetails";
+import { ModalDetailsCollection } from "@/components/ModalDetailsCollection";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Dog } from "@/interfaces/dog";
 import { player } from "@/lib/player";
@@ -9,12 +10,16 @@ import { ScaleLoader } from "react-spinners";
 
 export default function Collection() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
-  const [modalText, setModalText] = useState({});
-  const [isModalOpen, setisModalOpen] = useState(false);
+  const [modalText, setModalText] = useState<any>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let collection = playerData.correctBreedIds;
+  const component = "collection";
 
-  const handleClick = (dog: Dog) => {};
+  const handleClick = (dog: Dog) => {
+    setModalText(dog);
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <>
@@ -60,12 +65,11 @@ export default function Collection() {
         </div>
       ) : (
         <>
-          <ModalDetails
+          <ModalDetailsCollection
             isModalOpen={isModalOpen}
-            setIsModalOpen={setisModalOpen}
+            setIsModalOpen={setIsModalOpen}
             modalText={modalText}
-            // isGuessCorrect={isGuessCorrect}
-            // setIsGuessCorrect={setIsGuessCorrect}
+            component={component}
           />
         </>
       )}

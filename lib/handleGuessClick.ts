@@ -11,7 +11,7 @@ export const handleGuessClick = (
   playerData,
   setPlayerData,
   setIsGuessCorrect,
-  setisModalOpen,
+  setIsModalOpen,
   component
 ) => {
   const newScore = (scoreObj.score += 1);
@@ -49,5 +49,5 @@ export const handleGuessClick = (
     };
     setPlayerData(playerDataWhenWrong);
   }
-  return setisModalOpen(true);
+  return setIsModalOpen(true);
 };
