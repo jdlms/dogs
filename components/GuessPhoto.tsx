@@ -1,3 +1,4 @@
+import { Dog } from "@/interfaces/dog";
 import Image from "next/image";
 import { ScaleLoader } from "react-spinners";
 
@@ -23,10 +24,9 @@ export function GuessPhoto({ correctName, imgArr, handleClick }) {
           }}
         >
           {imgArr.length > 0 ? (
-            imgArr.map((img) => {
-              const playerGuess = img;
+            imgArr.map((playerGuess: Dog) => {
               return (
-                <li key={img.id}>
+                <li key={playerGuess.id}>
                   <Image
                     className="dogPic"
                     onClick={() => handleClick(playerGuess)}
@@ -38,8 +38,8 @@ export function GuessPhoto({ correctName, imgArr, handleClick }) {
                       borderStyle: "solid",
                       cursor: "pointer",
                     }}
-                    src={img.url}
-                    alt={img.breed}
+                    src={playerGuess.url}
+                    alt={playerGuess.breeds[0].name}
                     height={150}
                     width={200}
                   />

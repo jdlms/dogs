@@ -24,7 +24,7 @@ export default function Photo() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
 
   const [correctName, setCorrectName] = useState("");
-  const [imgArr, setImgArr] = useState<DogObjs[]>([]);
+  const [imgArr, setImgArr] = useState<Dog[]>([]);
   const [correctImg, setCorrectImg] = useState("");
   const [difficultyNum, setDifficultyNum] = useState(6);
   const [guess, setGuess] = useState(false);
@@ -65,15 +65,11 @@ export default function Photo() {
       const res = await axios.get("/api/getDogs");
       setCorrectName(res.data[0]);
       setCorrectImg(res.data[0].url);
-      let dogImgArr: DogObjs[] = [];
-      res.data.map((dogObj: Dog) => {
+      let dogImgArr: Dog[] = [];
+      res.data.filter((dogObj: Dog) => {
         const dogName = dogObj.breeds[0].name;
         if (!dogImgArr.includes(dogName) && dogImgArr.length < difficultyNum) {
-          return dogImgArr.push({
-            url: dogObj.url,
-            breed: dogObj.breeds[0].name,
-            id: dogObj.id,
-          });
+          return dogImgArr.push(dogObj);
         }
       });
       shuffleArray(dogImgArr);
@@ -83,7 +79,7 @@ export default function Photo() {
     }
   };
 
-  const handleClick = (playerGuess: { url: string; breed: string; id: string }) => {
+  const handleClick = (playerGuess: Dog) => {
     handleGuessClick(
       playerGuess,
       scoreObj,
