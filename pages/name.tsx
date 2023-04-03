@@ -25,7 +25,7 @@ export default function Name() {
   const [correctName, setCorrectName] = useState({});
   const [difficultyNum, setDifficultyNum] = useState(6);
   const [guess, setGuess] = useState(false);
-  const [modalText, setModalText] = useState({});
+  const [modalText, setModalText] = useState<any>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
