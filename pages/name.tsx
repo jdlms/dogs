@@ -95,9 +95,13 @@ export default function Name() {
 
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: ".5rem" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "2rem",
+      }}
     >
-        <h1 style={{ marginTop: ".5rem" }}>Guess that dog!</h1>
       {playerData.byNameAttempts === 0 && !isModalOpen ? (
         <OutOfGuesses />
       ) : !isModalOpen ? (

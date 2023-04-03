@@ -9,16 +9,6 @@ export default function ScoreWrapper({ children }: any) {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   return () => {
-  //     // cleanup function to reset state values to zero
-  //     setScore(0);
-  //     setAttempts(0);
-  //   };
-  // }, [router.pathname]);
-
- 
-
   return (
     <>
       <ScoreContext.Provider value={{ score, setScore, attempts, setAttempts }}>

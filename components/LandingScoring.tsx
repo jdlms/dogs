@@ -15,7 +15,7 @@ export function LandingScoring() {
         <div
           style={{
             paddingBottom: "10px",
-            borderBottom: "solid 1px white",
+          
             fontSize: "1.5rem",
             width: "100%",
           }}

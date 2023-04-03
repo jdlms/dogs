@@ -4,7 +4,6 @@ export function NoScoreYet() {
   return (
     <div
       style={{
-        borderBottom: "solid 1px white",
         width: "100%",
         fontSize: "1.5rem",
       }}

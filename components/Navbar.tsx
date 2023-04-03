@@ -1,11 +1,26 @@
 import Link from "next/link";
+import styled from "styled-components";
+
+export const NavLinkWrapper = styled.div`
+  display: inline;
+  font-size: 0.9rem;
+  border: 1px solid #d3a3ac;
+  background: #c0413b;
+  padding: 0.5rem;
+  border-radius: 4%;
+  color: #c5c5c5;
+  font-weight: bold;
+  margin: 1rem;
+`;
 
 export function Navbar() {
   return (
     <>
       <nav
         style={{
-          paddingBottom: ".3rem",
+          borderBottom: "1px solid #d3a3ac",
+
+          paddingBottom: ".2rem",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -25,14 +40,16 @@ export function Navbar() {
               fontSize: "2.5rem",
               fontWeight: "600",
               marginLeft: ".5rem",
-              marginTop: '.5rem',
+              marginTop: ".5rem",
               display: "inline-block",
               transform: "rotate(1deg)",
-              
             }}
-            >
+          >
             <Link href="/">🐶</Link>
           </span>
+          <h1 style={{ display: "inline", fontSize: "220%", marginLeft: ".5rem" }}>
+            Guess that dog!
+          </h1>
         </div>
         <div
           style={{
@@ -40,52 +57,16 @@ export function Navbar() {
             flexDirection: "row",
             alignItems: "center",
           }}
-          >
-          <div
-            style={{
-              display: "inline",
-              fontSize: ".9rem",
-              border: "1px solid white",
-              background: "white",
-              padding: ".5rem",
-              borderRadius: "4%",
-              color: "#1c1b22",
-              fontWeight: "bold",
-              margin: "1rem",
-            }}
-          >
+        >
+          <NavLinkWrapper>
             <Link href="/name">name</Link>
-          </div>
-          <div
-            style={{
-              display: "inline",
-              fontSize: ".9rem",
-              border: "1px solid white",
-              background: "white",
-              padding: ".5rem",
-              borderRadius: "4%",
-              color: "#1c1b22",
-              fontWeight: "bold",
-              margin: "1rem",
-            }}
-          >
+          </NavLinkWrapper>
+          <NavLinkWrapper>
             <Link href="/photo">photo</Link>
-          </div>
-          <div
-            style={{
-              display: "inline",
-              fontSize: ".9rem",
-              border: "1px solid white",
-              background: "white",
-              padding: ".5rem",
-              borderRadius: "4%",
-              color: "#1c1b22",
-              fontWeight: "bold",
-              margin: "1rem",
-            }}
-          >
+          </NavLinkWrapper>
+          <NavLinkWrapper>
             <Link href="/collection">collection</Link>
-          </div>
+          </NavLinkWrapper>
         </div>
       </nav>
     </>

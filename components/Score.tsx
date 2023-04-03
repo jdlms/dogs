@@ -7,11 +7,12 @@ interface Props {
 
 export const Span = styled.div`
   border-width: 1px;
-  border-color: white;
+  border-color: #d3a3ac;
   border-style: solid;
   display: inline;
-  padding: 1px;
-  color: red;
+  padding: 2px;
+  background-color: #c0413b;
+  color: #c5c5c5;
 `;
 
 export function Score({ score, attempts }: Props) {

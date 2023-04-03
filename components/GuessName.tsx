@@ -33,7 +33,7 @@ export function GuessName({ randomImg, namesArr, handleClick }) {
         />
       ) : (
         <div style={{ marginTop: "4rem" }}>
-          <ScaleLoader color="#ffffff" />
+          <ScaleLoader color="#d3a3ac" />
         </div>
       )}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
