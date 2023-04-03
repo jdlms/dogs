@@ -47,9 +47,11 @@ export function Navbar() {
           >
             <Link href="/">🐶</Link>
           </span>
-          <h1 style={{ display: "inline", fontSize: "220%", marginLeft: ".5rem" }}>
-            Guess that dog!
-          </h1>
+          <Link href="/">
+            <h1 style={{ display: "inline", fontSize: "220%", marginLeft: "1rem" }}>
+              Guess that dog!
+            </h1>
+          </Link>
         </div>
         <div
           style={{
@@ -58,15 +60,17 @@ export function Navbar() {
             alignItems: "center",
           }}
         >
-          <NavLinkWrapper>
-            <Link href="/name">name</Link>
-          </NavLinkWrapper>
-          <NavLinkWrapper>
-            <Link href="/photo">photo</Link>
-          </NavLinkWrapper>
-          <NavLinkWrapper>
-            <Link href="/collection">collection</Link>
-          </NavLinkWrapper>
+          <Link href="/name">
+            <NavLinkWrapper>name</NavLinkWrapper>
+          </Link>
+
+          <Link href="/photo">
+            <NavLinkWrapper>photo</NavLinkWrapper>
+          </Link>
+
+          <Link href="/collection">
+            <NavLinkWrapper>collection</NavLinkWrapper>
+          </Link>
         </div>
       </nav>
     </>

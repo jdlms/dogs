@@ -99,7 +99,7 @@ export default function Name() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: "2rem",
+        marginTop: "4rem",
       }}
     >
       {playerData.byNameAttempts === 0 && !isModalOpen ? (

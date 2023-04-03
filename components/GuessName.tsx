@@ -6,12 +6,13 @@ import styled from "styled-components";
 export const Button = styled.button`
   display: inline;
   font-size: 0.9rem;
-  border: 1px solid white;
-  background: white;
+  border: 1px solid #c0413b;
+  background: #333333;
   padding: 0.5rem;
   border-radius: 4%;
-  color: #1c1b22;
+  color: #c5c5c5;
   font-weight: bold;
+  cursor: pointer;
   margin: 0.5rem;
 `;
 
@@ -23,7 +24,7 @@ export function GuessName({ randomImg, namesArr, handleClick }) {
           style={{
             objectFit: "contain",
             borderWidth: "2px",
-            borderColor: "white",
+            borderColor: "#f5f5f5",
             borderStyle: "solid",
           }}
           src={randomImg}
@@ -36,7 +37,9 @@ export function GuessName({ randomImg, namesArr, handleClick }) {
           <ScaleLoader color="#d3a3ac" />
         </div>
       )}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div
+        style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "1rem" }}
+      >
         {namesArr.length > 0
           ? namesArr.map((playerGuess: Dog) => {
               return (

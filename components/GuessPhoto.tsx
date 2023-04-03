@@ -5,7 +5,7 @@ import { ScaleLoader } from "react-spinners";
 export function GuessPhoto({ correctName, imgArr, handleClick }) {
   return (
     <>
-      <div style={{ height: "54px" }}>
+      <div style={{ height: "54px", marginTop: "2rem" }}>
         {correctName ? (
           <h2 style={{ margin: "none", textDecoration: "underline" }}>
             {correctName.breeds[0].name}
