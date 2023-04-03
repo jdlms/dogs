@@ -13,6 +13,7 @@ export const Span = styled.div`
   padding: 1px;
   color: red;
 `;
+
 export function Score({ score, attempts }: Props) {
   return (
     <>

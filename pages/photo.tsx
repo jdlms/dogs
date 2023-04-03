@@ -5,17 +5,13 @@ import { OutOfGuesses } from "@/components/OutOfGuesses";
 import { useScoreContext } from "@/context/score";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Dog } from "@/interfaces/dog";
-import { DogObjs } from "@/interfaces/dogObjs";
 import { currentDay } from "@/lib/currentDay";
 import { handleGuessClick } from "@/lib/handleGuessClick";
 import { player } from "@/lib/player";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import ScaleLoader from "react-spinners/ScaleLoader";
 import { HardMode } from "../components/HardMode";
-import { Score } from "../components/Score";
 
 const component = "photo";
 

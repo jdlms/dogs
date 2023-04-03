@@ -19,8 +19,10 @@ export function GuessPhoto({ correctName, imgArr, handleClick }) {
             flexDirection: "row",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "10px",
+            gap: "5px",
             listStyle: "none",
+            justifyContent: "space-around",
+            padding: 0,
           }}
         >
           {imgArr.length > 0 ? (

@@ -25,12 +25,12 @@ export function Navbar() {
               fontSize: "2.5rem",
               fontWeight: "600",
               marginLeft: ".5rem",
-            marginTop: '.5rem',
+              marginTop: '.5rem',
               display: "inline-block",
               transform: "rotate(1deg)",
-            
+              
             }}
-          >
+            >
             <Link href="/">🐶</Link>
           </span>
         </div>
@@ -40,7 +40,7 @@ export function Navbar() {
             flexDirection: "row",
             alignItems: "center",
           }}
-        >
+          >
           <div
             style={{
               display: "inline",

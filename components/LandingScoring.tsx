@@ -12,7 +12,14 @@ export function LandingScoring() {
       {playerData.lifetimePlayerGuesses === 0 ? (
         <NoScoreYet />
       ) : (
-        <div style={{ paddingBottom: "10px", borderBottom: "solid 1px white", fontSize: "1.5rem" }}>
+        <div
+          style={{
+            paddingBottom: "10px",
+            borderBottom: "solid 1px white",
+            fontSize: "1.5rem",
+            width: "100%",
+          }}
+        >
           You&apos;ve made a total of <Span>{playerData.lifetimePlayerGuesses}</Span> guesses and
           collected <Span>{playerData.correctBreedIds.length}</Span> breeds.
         </div>

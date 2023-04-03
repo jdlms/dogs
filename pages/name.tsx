@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Dog } from "@/interfaces/dog";
-import { DogObjs } from "@/interfaces/dogObjs";
 import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -95,7 +94,10 @@ export default function Name() {
   };
 
   return (
-    <>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: ".5rem" }}
+    >
+        <h1 style={{ marginTop: ".5rem" }}>Guess that dog!</h1>
       {playerData.byNameAttempts === 0 && !isModalOpen ? (
         <OutOfGuesses />
       ) : !isModalOpen ? (
@@ -109,6 +111,6 @@ export default function Name() {
           setIsGuessCorrect={setIsGuessCorrect}
         />
       )}
-    </>
+    </div>
   );
 }
