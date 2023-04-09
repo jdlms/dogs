@@ -46,7 +46,7 @@ export default function Photo() {
           ...playerData,
           dayOfWeek: currentDay,
           byNameAttempts: 5,
-          byPhotoAttempts: playerData.byPhotoAttempts,
+          byPhotoAttempts: 5,
         };
         setPlayerData(playerDataNewDate);
       }
@@ -92,7 +92,14 @@ export default function Photo() {
   };
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "4rem",
+      }}
+    >
       {playerData.byPhotoAttempts === 0 && !isModalOpen ? (
         <OutOfGuesses />
       ) : !isModalOpen ? (
@@ -106,6 +113,6 @@ export default function Photo() {
           setIsGuessCorrect={setIsGuessCorrect}
         />
       )}
-    </>
+    </div>
   );
 }

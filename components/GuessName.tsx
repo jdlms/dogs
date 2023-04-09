@@ -1,7 +1,7 @@
 import { Dog } from "@/interfaces/dog";
 import Image from "next/image";
-import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
+import { Loader } from "./Loader";
 
 export const Button = styled.button`
   display: inline;
@@ -33,9 +33,7 @@ export function GuessName({ randomImg, namesArr, handleClick }) {
           alt={""}
         />
       ) : (
-        <div style={{ marginTop: "4rem" }}>
-          <ScaleLoader color="#d3a3ac" />
-        </div>
+        <Loader />
       )}
       <div
         style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "1rem" }}

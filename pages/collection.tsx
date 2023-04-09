@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ModalDetails } from "@/components/ModalDetails";
+import { CollectionImg } from "@/components/CollectionImg";
+import { Loader } from "@/components/Loader";
 import { ModalDetailsCollection } from "@/components/ModalDetailsCollection";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Dog } from "@/interfaces/dog";
 import { player } from "@/lib/player";
 import Image from "next/image";
 import { useState } from "react";
-import { ScaleLoader } from "react-spinners";
 
 export default function Collection() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
@@ -22,9 +22,16 @@ export default function Collection() {
   };
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "4rem",
+      }}
+    >
       {!isModalOpen ? (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div>
           <ul
             style={{
               display: "flex",
@@ -37,29 +44,10 @@ export default function Collection() {
           >
             {collection.length > 0 ? (
               collection.map((dog: Dog) => {
-                return (
-                  <li key={dog.id}>
-                    <Image
-                      className="dogPic"
-                      onClick={() => handleClick(dog)}
-                      style={{
-                        // height: "150px",
-                        objectFit: "fill",
-                        borderWidth: "2px",
-                        borderColor: "white",
-                        borderStyle: "solid",
-                        cursor: "pointer",
-                      }}
-                      src={dog.url}
-                      alt={dog.breeds[0].name}
-                      height={150}
-                      width={200}
-                    />
-                  </li>
-                );
+                return <CollectionImg key={dog.id} dog={dog} handleClick={handleClick} />;
               })
             ) : (
-              <ScaleLoader color="#ffffff" />
+              <Loader />
             )}
           </ul>
         </div>
@@ -73,6 +61,6 @@ export default function Collection() {
           />
         </>
       )}
-    </>
+    </div>
   );
 }

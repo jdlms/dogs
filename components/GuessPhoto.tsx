@@ -1,18 +1,25 @@
 import { Dog } from "@/interfaces/dog";
 import Image from "next/image";
-import { ScaleLoader } from "react-spinners";
+import { Loader } from "./Loader";
 
 export function GuessPhoto({ correctName, imgArr, handleClick }) {
   return (
     <>
-      <div style={{ height: "54px", marginTop: "2rem" }}>
+      <div>
         {correctName ? (
-          <h2 style={{ margin: "none", textDecoration: "underline" }}>
+          <h2
+            style={{
+              margin: "none",
+              border: "solid 2px #f5f5f5",
+              padding: "3px",
+              borderRadius: "4px",
+            }}
+          >
             {correctName.breeds[0].name}
           </h2>
         ) : null}
       </div>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div>
         <ul
           style={{
             display: "flex",
@@ -36,7 +43,7 @@ export function GuessPhoto({ correctName, imgArr, handleClick }) {
                       // height: "150px",
                       objectFit: "fill",
                       borderWidth: "2px",
-                      borderColor: "white",
+                      borderColor: "#c0413b",
                       borderStyle: "solid",
                       cursor: "pointer",
                     }}
@@ -49,7 +56,7 @@ export function GuessPhoto({ correctName, imgArr, handleClick }) {
               );
             })
           ) : (
-            <ScaleLoader color="#ffffff" />
+            <Loader />
           )}
         </ul>
       </div>

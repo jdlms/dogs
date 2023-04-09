@@ -18,7 +18,7 @@ export function Navbar() {
     <>
       <nav
         style={{
-          borderBottom: "1px solid #d3a3ac",
+          borderBottom: "2px solid #d3a3ac",
 
           paddingBottom: ".2rem",
           display: "flex",
