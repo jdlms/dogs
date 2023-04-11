@@ -2,6 +2,7 @@ import { Dog } from "@/interfaces/dog";
 import Image from "next/image";
 import styled from "styled-components";
 import { Loader } from "./Loader";
+import { useState } from "react";
 
 export const Button = styled.button`
   display: inline;
@@ -16,20 +17,25 @@ export const Button = styled.button`
   margin: 0.5rem;
 `;
 
-export function GuessName({ randomImg, namesArr, handleClick }) {
+export function GuessName({ randomImg, namesArr, handleClick, disabled }) {
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+
+  function handleImageLoad(event) {
+    setImageSize({ width: event.target.width, height: event.target.height });
+  }
+  console.log(disabled);
+
   return (
     <>
       {randomImg ? (
         <Image
           style={{
             objectFit: "contain",
-            borderWidth: "2px",
-            borderColor: "#f5f5f5",
-            borderStyle: "solid",
           }}
           src={randomImg}
-          height={150}
-          width={228}
+          onLoad={handleImageLoad}
+          width={imageSize.width || 240}
+          height={imageSize.height || 160}
           alt={""}
         />
       ) : (
@@ -41,7 +47,11 @@ export function GuessName({ randomImg, namesArr, handleClick }) {
         {namesArr.length > 0
           ? namesArr.map((playerGuess: Dog) => {
               return (
-                <Button onClick={() => handleClick(playerGuess)} key={playerGuess.id}>
+                <Button
+                  disabled={disabled}
+                  onClick={() => handleClick(playerGuess)}
+                  key={playerGuess.id}
+                >
                   {playerGuess.breeds[0].name}
                 </Button>
               );

@@ -22,7 +22,7 @@ export default function Photo() {
   const [correctName, setCorrectName] = useState("");
   const [imgArr, setImgArr] = useState<Dog[]>([]);
   const [correctImg, setCorrectImg] = useState("");
-  const [difficultyNum, setDifficultyNum] = useState(6);
+  const [difficultyNum, setDifficultyNum] = useState(5);
   const [guess, setGuess] = useState(false);
   const [modalText, setModalText] = useState<any>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,9 +59,12 @@ export default function Photo() {
   const getRandomName = async function () {
     try {
       const res = await axios.get("/api/getDogs");
-      setCorrectName(res.data[0]);
+      const randomDog = Math.floor(Math.random() * res.data.length);
+      setCorrectName(res.data[randomDog]);
       setCorrectImg(res.data[0].url);
       let dogImgArr: Dog[] = [];
+      dogImgArr.push(res.data[randomDog]);
+
       res.data.filter((dogObj: Dog) => {
         const dogName = dogObj.breeds[0].name;
         if (!dogImgArr.includes(dogName) && dogImgArr.length < difficultyNum) {

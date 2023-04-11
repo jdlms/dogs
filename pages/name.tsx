@@ -28,6 +28,8 @@ export default function Name() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
+  const [disabled, setDisabled] = useState(false);
+
   useEffect(() => {
     let isSubscribed = true;
     if (isSubscribed) {
@@ -59,19 +61,23 @@ export default function Name() {
   const getRandomImg = async function () {
     try {
       const res = await axios.get("/api/getDogs");
-      setRandomImg(res.data[0].url);
-      setCorrectName(res.data[0]);
-
+      const randomDog = Math.floor(Math.random() * res.data.length);
+      setRandomImg(res.data[randomDog].url);
+      setCorrectName(res.data[randomDog]);
+      console.log(correctName);
       let dogNamesArr: Dog[] = [];
+      dogNamesArr.push(res.data[randomDog]);
+
       // #todo in this .map breed name duplications are currently possible
       res.data.filter((dogObj: Dog) => {
-        const dogName = dogObj.breeds[0].name;
+        let dogName: string = dogObj.breeds[0].name;
         if (!dogNamesArr.includes(dogName) && dogNamesArr.length < difficultyNum) {
           return dogNamesArr.push(dogObj);
         }
       });
       shuffleArray(dogNamesArr);
       setNamesArr(dogNamesArr);
+      setDisabled(false);
     } catch (error) {
       console.error("There was an error:", error);
     }
@@ -89,7 +95,8 @@ export default function Name() {
       setPlayerData,
       setIsGuessCorrect,
       setIsModalOpen,
-      component
+      component,
+      setDisabled
     );
   };
 
@@ -105,7 +112,12 @@ export default function Name() {
       {playerData.byNameAttempts === 0 && !isModalOpen ? (
         <OutOfGuesses />
       ) : !isModalOpen ? (
-        <GuessName randomImg={randomImg} namesArr={namesArr} handleClick={handleClick} />
+        <GuessName
+          randomImg={randomImg}
+          namesArr={namesArr}
+          handleClick={handleClick}
+          disabled={disabled}
+        />
       ) : (
         <ModalDetails
           isModalOpen={isModalOpen}
@@ -113,6 +125,7 @@ export default function Name() {
           modalText={modalText}
           isGuessCorrect={isGuessCorrect}
           setIsGuessCorrect={setIsGuessCorrect}
+          setDisabled={setDisabled}
         />
       )}
     </div>

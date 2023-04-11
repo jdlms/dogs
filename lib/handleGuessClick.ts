@@ -12,8 +12,12 @@ export const handleGuessClick = (
   setPlayerData,
   setIsGuessCorrect,
   setIsModalOpen,
-  component
+  component,
+  setDisabled
 ) => {
+  if (setDisabled) {
+    setDisabled(true);
+  }
   const newScore = (scoreObj.score += 1);
   const attemptCount = (scoreObj.attempts += 1);
   setGuess(!guess);
@@ -33,7 +37,11 @@ export const handleGuessClick = (
       byPhotoAttempts:
         component === "photo" ? --playerData.byPhotoAttempts : playerData.byPhotoAttempts,
     };
-    playerDataWhenCorrect.correctBreedIds.push(playerGuess);
+
+    if (!playerDataWhenCorrect.correctBreedIds.includes(playerGuess)) {
+      playerDataWhenCorrect.correctBreedIds.push(playerGuess);
+    }
+
     setPlayerData(playerDataWhenCorrect);
     setIsGuessCorrect(true);
   } else {
@@ -49,5 +57,6 @@ export const handleGuessClick = (
     };
     setPlayerData(playerDataWhenWrong);
   }
+
   return setIsModalOpen(true);
 };

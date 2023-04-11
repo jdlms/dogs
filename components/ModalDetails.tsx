@@ -20,9 +20,11 @@ export function ModalDetails({
   isGuessCorrect,
   setIsGuessCorrect,
   component,
+  setDisabled,
 }: ModalDetailsProps) {
   const handleCancel = () => {
     setIsModalOpen(false);
+   
     if (setIsGuessCorrect) {
       setIsGuessCorrect(false);
     }
@@ -42,7 +44,13 @@ export function ModalDetails({
   return (
     <>
       {component ? (
-        <Modal title={correctDog.name} open={isModalOpen} onCancel={handleCancel} footer={null}>
+        <Modal
+          title={correctDog.name}
+          style={{ color: "#333333" }}
+          open={isModalOpen}
+          onCancel={handleCancel}
+          footer={null}
+        >
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <p>
               The {correctDog.name} is known to be {temperament} and was bred for {bredFor}. They
@@ -72,23 +80,3 @@ export function ModalDetails({
     </>
   );
 }
-
-// The NAME is known to be TEMPERMENT and was bred for BRED_FOR. They usually have a high of HEIGHT.IMPERIAL inches, weigh WEIGHT.IMPERIAL and live for LIFE-SPAN.
-
-// bred_for: "Hauling heavy freight, Sled pulling"
-// ​
-// breed_group: "Working"
-// ​
-// height: Object { imperial: "23 - 25", metric: "58 - 64" }
-// ​
-// id: 9
-// ​
-// life_span: "12 - 15 years"
-// ​
-// name: "Alaskan Malamute"
-// ​
-// reference_image_id: "dW5UucTIW"
-// ​
-// temperament: "Friendly, Affectionate, Devoted, Loyal, Dignified, Playful"
-// ​
-// weight: Object { imperial: "65 - 100", metric: "29 - 45" }

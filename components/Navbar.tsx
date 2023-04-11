@@ -20,13 +20,13 @@ export function Navbar() {
         style={{
           borderBottom: "2px solid #d3a3ac",
 
-          paddingBottom: ".2rem",
+          paddingBottom: ".5rem",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
         }}
       >
-        <div>
+        <div style={{ marginTop: "-5px" }}>
           <div
             style={{
               fontSize: "1.4rem",
