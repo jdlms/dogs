@@ -21,7 +21,7 @@ export function GuessPhoto({ correctName, imgArr, handleClick }: guessPhotoProps
               borderRadius: "4px",
             }}
           >
-            {correctName.breeds[0].name}
+            {correctName.breeds ? correctName.breeds[0].name : ""}
           </h2>
         ) : null}
       </div>

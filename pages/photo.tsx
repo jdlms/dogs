@@ -67,10 +67,9 @@ export default function Photo() {
 
       res.data.filter((dogObj: Dog) => {
         const dogName = dogObj.breeds[0].name;
-        if (
-          !dogImgArr.some((dog) => dog.breeds[0].name === dogName) &&
-          dogImgArr.length < difficultyNum
-        ) {
+
+        let oldDogImg = dogImgArr.some((dog) => dog.breeds[0].name === dogName);
+        if (!oldDogImg && dogImgArr.length < difficultyNum) {
           return dogImgArr.push(dogObj);
         }
       });

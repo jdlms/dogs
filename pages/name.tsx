@@ -73,10 +73,10 @@ export default function Name() {
       // #todo in this .map breed name duplications are currently possible
       res.data.filter((dogObj: Dog) => {
         let dogName: string = dogObj.breeds[0].name;
-        if (
-          !dogNamesArr.some((dog) => dog.breeds[0].name === dogName) &&
-          dogNamesArr.length < difficultyNum
-        ) {
+
+        let oldDogName = dogNamesArr.some((dog) => dog.breeds[0].name === dogName);
+
+        if (!oldDogName && dogNamesArr.length < difficultyNum) {
           return dogNamesArr.push(dogObj);
         }
       });
