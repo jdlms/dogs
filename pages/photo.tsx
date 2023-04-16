@@ -109,7 +109,7 @@ export default function Photo() {
       <PageTitle />
 
       {playerData.byPhotoAttempts === 0 && !isModalOpen ? (
-        <OutOfGuesses />
+        <OutOfGuesses component={component} playerData={playerData} />
       ) : !isModalOpen ? (
         <GuessPhoto correctName={correctName} imgArr={imgArr} handleClick={handleClick} />
       ) : (

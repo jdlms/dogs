@@ -117,7 +117,7 @@ export default function Name() {
       <PageTitle />
 
       {playerData.byNameAttempts === 0 && !isModalOpen ? (
-        <OutOfGuesses />
+        <OutOfGuesses component={component} playerData={playerData} />
       ) : !isModalOpen ? (
         <GuessName
           randomImg={randomImg}

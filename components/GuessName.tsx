@@ -3,7 +3,6 @@ import Image from "next/image";
 import styled from "styled-components";
 import { Loader } from "./Loader";
 import { useState } from "react";
-import { string } from "joi";
 
 export const Button = styled.button`
   display: inline;
