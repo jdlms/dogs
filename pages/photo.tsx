@@ -18,7 +18,6 @@ const component = "photo";
 export default function Photo() {
   const scoreObj = useScoreContext();
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
-
   const [correctName, setCorrectName] = useState("");
   const [imgArr, setImgArr] = useState<Dog[]>([]);
   const [correctImg, setCorrectImg] = useState("");
@@ -67,7 +66,10 @@ export default function Photo() {
 
       res.data.filter((dogObj: Dog) => {
         const dogName = dogObj.breeds[0].name;
-        if (!dogImgArr.includes(dogName) && dogImgArr.length < difficultyNum) {
+        if (
+          !dogImgArr.some((dog) => dog.breeds[0].name === dogName) &&
+          dogImgArr.length < difficultyNum
+        ) {
           return dogImgArr.push(dogObj);
         }
       });

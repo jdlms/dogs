@@ -24,7 +24,7 @@ export default function Name() {
   const [correctName, setCorrectName] = useState({});
   const [difficultyNum, setDifficultyNum] = useState(6);
   const [guess, setGuess] = useState(false);
-  const [modalText, setModalText] = useState<any>({});
+  const [modalText, setModalText] = useState<Dog[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
@@ -71,7 +71,10 @@ export default function Name() {
       // #todo in this .map breed name duplications are currently possible
       res.data.filter((dogObj: Dog) => {
         let dogName: string = dogObj.breeds[0].name;
-        if (!dogNamesArr.includes(dogName) && dogNamesArr.length < difficultyNum) {
+        if (
+          !dogNamesArr.some((dog) => dog.breeds[0].name === dogName) &&
+          dogNamesArr.length < difficultyNum
+        ) {
           return dogNamesArr.push(dogObj);
         }
       });

@@ -11,6 +11,7 @@ export type ModalDetailsProps = {
   isGuessCorrect?: boolean;
   setIsGuessCorrect?: Dispatch<SetStateAction<boolean>>;
   component?: string;
+  setDisabled?: Dispatch<SetStateAction<boolean>>
 };
 
 export function ModalDetails({
