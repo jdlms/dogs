@@ -3,6 +3,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { Loader } from "./Loader";
 import { useState } from "react";
+import { string } from "joi";
 
 export const Button = styled.button`
   display: inline;
@@ -17,13 +18,19 @@ export const Button = styled.button`
   margin: 0.5rem;
 `;
 
-export function GuessName({ randomImg, namesArr, handleClick, disabled }) {
+type guessNameProps = {
+  randomImg: string;
+  namesArr: Dog[];
+  handleClick: (playerguess: Dog) => void;
+  disabled: boolean;
+};
+
+export function GuessName({ randomImg, namesArr, handleClick, disabled }: guessNameProps) {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
-  function handleImageLoad(event) {
+  function handleImageLoad(event: any) {
     setImageSize({ width: event.target.width, height: event.target.height });
   }
-  console.log(disabled);
 
   return (
     <>
@@ -42,7 +49,16 @@ export function GuessName({ randomImg, namesArr, handleClick, disabled }) {
         <Loader />
       )}
       <div
-        style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "1rem" }}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: "1rem",
+          flexWrap: "wrap",
+          gap: "5px",
+          listStyle: "none",
+          justifyContent: "space-around",
+        }}
       >
         {namesArr.length > 0
           ? namesArr.map((playerGuess: Dog) => {

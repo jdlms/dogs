@@ -9,25 +9,25 @@ export const handleGuessClick = (
   scoreObj: ScoringProps,
   guess: boolean,
   setGuess: Dispatch<SetStateAction<boolean>>,
-  setModalText: DispatchuseState<Dog[]>,
-  correctName: Dog,
+  setModalText: Dispatch<SetStateAction<Dog | undefined>>,
   playerData: Player,
   setPlayerData: Dispatch<SetStateAction<Player>>,
   setIsGuessCorrect: Dispatch<SetStateAction<boolean>>,
   setIsModalOpen: Dispatch<SetStateAction<boolean>>,
   component: string,
+  correctName?: Dog,
   setDisabled?: Dispatch<SetStateAction<boolean>>
 ) => {
   if (setDisabled) {
     setDisabled(true);
   }
-  const newScore = (scoreObj.score += 1);
+  const newScore = scoreObj.score + 1;
   const attemptCount = (scoreObj.attempts += 1);
   setGuess(!guess);
   scoreObj.setAttempts(attemptCount);
   setModalText(correctName);
 
-  if (playerGuess.breeds[0].name === correctName) {
+  if (playerGuess.breeds[0].name === correctName?.breeds[0].name) {
     scoreObj.setScore(newScore);
 
     const playerDataWhenCorrect = {
@@ -41,11 +41,17 @@ export const handleGuessClick = (
         component === "photo" ? --playerData.byPhotoAttempts : playerData.byPhotoAttempts,
     };
 
-    if (!playerDataWhenCorrect.correctBreedIds.includes(playerGuess.breeds[0].name)) {
-      playerDataWhenCorrect.correctBreedIds.push(playerGuess.breeds[0].name);
+    const hasBreedAlready = playerDataWhenCorrect.correctBreedIds.some(
+      (dog: Dog) => dog.breeds[0].name === playerGuess.breeds[0].name
+    );
+
+    if (!hasBreedAlready) {
+      playerDataWhenCorrect.correctBreedIds.push(playerGuess);
     }
 
     setPlayerData(playerDataWhenCorrect);
+    console.log("hi!");
+
     setIsGuessCorrect(true);
   } else {
     const playerDataWhenWrong = {
@@ -58,7 +64,9 @@ export const handleGuessClick = (
       byPhotoAttempts:
         component === "photo" ? --playerData.byPhotoAttempts : playerData.byPhotoAttempts,
     };
+
     setPlayerData(playerDataWhenWrong);
+    setIsGuessCorrect(false);
   }
 
   return setIsModalOpen(true);

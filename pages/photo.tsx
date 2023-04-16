@@ -12,18 +12,19 @@ import { shuffleArray } from "@/lib/shuffle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HardMode } from "../components/HardMode";
+import { PageTitle } from "@/components/PageTitle";
 
 const component = "photo";
 
 export default function Photo() {
   const scoreObj = useScoreContext();
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
-  const [correctName, setCorrectName] = useState("");
+  const [correctName, setCorrectName] = useState<Dog | undefined>(undefined);
   const [imgArr, setImgArr] = useState<Dog[]>([]);
   const [correctImg, setCorrectImg] = useState("");
   const [difficultyNum, setDifficultyNum] = useState(5);
   const [guess, setGuess] = useState(false);
-  const [modalText, setModalText] = useState<any>({});
+  const [modalText, setModalText] = useState<Dog | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
@@ -34,16 +35,16 @@ export default function Photo() {
       if (playerData.nameAttempts === 0) {
         const playerDataNewDate = {
           ...playerData,
-          dayOfWeek: currentDay,
+          dayOfTheWeek: currentDay,
           byNameAttempts: playerData.byNameAttempts,
           byPhotoAttempts: playerData.byPhotoAttempts,
         };
         setPlayerData(playerDataNewDate);
       }
-      if (currentDay !== playerData.dayOfWeek) {
+      if (currentDay !== playerData.dayOfTheWeek) {
         const playerDataNewDate = {
           ...playerData,
-          dayOfWeek: currentDay,
+          dayOfTheWeek: currentDay,
           byNameAttempts: 5,
           byPhotoAttempts: 5,
         };
@@ -87,12 +88,12 @@ export default function Photo() {
       guess,
       setGuess,
       setModalText,
-      correctName,
       playerData,
       setPlayerData,
       setIsGuessCorrect,
       setIsModalOpen,
-      component
+      component,
+      correctName
     );
   };
 
@@ -105,6 +106,8 @@ export default function Photo() {
         marginTop: "4rem",
       }}
     >
+      <PageTitle />
+
       {playerData.byPhotoAttempts === 0 && !isModalOpen ? (
         <OutOfGuesses />
       ) : !isModalOpen ? (

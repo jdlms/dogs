@@ -1,7 +1,9 @@
+import { Dog } from "./dog";
+
 export interface Player {
   lifetimePlayerGuesses: number;
   lifetimePlayerScore: number;
-  correctBreedIds: string[];
+  correctBreedIds: Dog[];
   dayOfTheWeek: string;
   byNameAttempts: number;
   byPhotoAttempts: number;

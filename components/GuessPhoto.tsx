@@ -2,7 +2,13 @@ import { Dog } from "@/interfaces/dog";
 import Image from "next/image";
 import { Loader } from "./Loader";
 
-export function GuessPhoto({ correctName, imgArr, handleClick }) {
+type guessPhotoProps = {
+  correctName: Dog | undefined;
+  imgArr: Dog[];
+  handleClick: (playerguess: Dog) => void;
+};
+
+export function GuessPhoto({ correctName, imgArr, handleClick }: guessPhotoProps) {
   return (
     <>
       <div>

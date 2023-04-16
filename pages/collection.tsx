@@ -2,15 +2,15 @@
 import { CollectionImg } from "@/components/CollectionImg";
 import { Loader } from "@/components/Loader";
 import { ModalDetailsCollection } from "@/components/ModalDetailsCollection";
+import { PageTitle } from "@/components/PageTitle";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Dog } from "@/interfaces/dog";
 import { player } from "@/lib/player";
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Collection() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
-  const [modalText, setModalText] = useState<any>({});
+  const [modalText, setModalText] = useState<Dog | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   let collection = playerData.correctBreedIds;
@@ -30,6 +30,8 @@ export default function Collection() {
         marginTop: "4rem",
       }}
     >
+      <PageTitle />
+
       {!isModalOpen ? (
         <div>
           <ul
@@ -40,6 +42,8 @@ export default function Collection() {
               flexWrap: "wrap",
               gap: "10px",
               listStyle: "none",
+              justifyContent: "space-around",
+              padding: 0,
             }}
           >
             {collection.length > 0 ? (

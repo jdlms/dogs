@@ -12,6 +12,7 @@ import { currentDay } from "@/lib/currentDay";
 import { GuessName } from "@/components/GuessName";
 import { ModalDetails } from "@/components/ModalDetails";
 import { handleGuessClick } from "@/lib/handleGuessClick";
+import { PageTitle } from "@/components/PageTitle";
 
 const component = "name";
 
@@ -21,10 +22,10 @@ export default function Name() {
 
   const [randomImg, setRandomImg] = useState("");
   const [namesArr, setNamesArr] = useState<Dog[]>([]);
-  const [correctName, setCorrectName] = useState({});
+  const [correctName, setCorrectName] = useState<Dog | undefined>(undefined);
   const [difficultyNum, setDifficultyNum] = useState(6);
   const [guess, setGuess] = useState(false);
-  const [modalText, setModalText] = useState<Dog[]>([]);
+  const [modalText, setModalText] = useState<Dog | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
@@ -37,16 +38,16 @@ export default function Name() {
       if (playerData.nameAttempts === 0) {
         const playerDataNewDate = {
           ...playerData,
-          dayOfWeek: currentDay,
+          dayOfTheWeek: currentDay,
           byNameAttempts: playerData.byNameAttempts,
           byPhotoAttempts: playerData.byPhotoAttempts,
         };
         setPlayerData(playerDataNewDate);
       }
-      if (currentDay !== playerData.dayOfWeek) {
+      if (currentDay !== playerData.dayOfTheWeek) {
         const playerDataNewDate = {
           ...playerData,
-          dayOfWeek: currentDay,
+          dayOfTheWeek: currentDay,
           byNameAttempts: 5,
           byPhotoAttempts: playerData.byPhotoAttempts,
         };
@@ -63,8 +64,9 @@ export default function Name() {
       const res = await axios.get("/api/getDogs");
       const randomDog = Math.floor(Math.random() * res.data.length);
       setRandomImg(res.data[randomDog].url);
+
       setCorrectName(res.data[randomDog]);
-      console.log(correctName);
+
       let dogNamesArr: Dog[] = [];
       dogNamesArr.push(res.data[randomDog]);
 
@@ -93,12 +95,12 @@ export default function Name() {
       guess,
       setGuess,
       setModalText,
-      correctName,
       playerData,
       setPlayerData,
       setIsGuessCorrect,
       setIsModalOpen,
       component,
+      correctName,
       setDisabled
     );
   };
@@ -112,6 +114,8 @@ export default function Name() {
         marginTop: "4rem",
       }}
     >
+      <PageTitle />
+
       {playerData.byNameAttempts === 0 && !isModalOpen ? (
         <OutOfGuesses />
       ) : !isModalOpen ? (

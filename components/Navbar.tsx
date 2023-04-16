@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export const NavLinkWrapper = styled.div`
@@ -14,6 +15,17 @@ export const NavLinkWrapper = styled.div`
 `;
 
 export function Navbar() {
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const showTitle = windowWidth >= 720;
+
   return (
     <>
       <nav
@@ -47,11 +59,13 @@ export function Navbar() {
           >
             <Link href="/">🐶</Link>
           </span>
-          <Link href="/">
-            <h1 style={{ display: "inline", fontSize: "220%", marginLeft: "1rem" }}>
-              Guess that dog!
-            </h1>
-          </Link>
+          {showTitle && (
+            <Link href="/">
+              <h1 style={{ display: "inline", fontSize: "220%", marginLeft: "1rem" }}>
+                Guess that dog!
+              </h1>
+            </Link>
+          )}
         </div>
         <div
           style={{
