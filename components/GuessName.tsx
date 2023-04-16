@@ -68,7 +68,9 @@ export function GuessName({ randomImg, namesArr, handleClick, disabled }: guessN
                     onClick={() => handleClick(playerGuess)}
                     key={playerGuess.id}
                   >
-                    {playerGuess.breeds[0].name}
+                    {playerGuess.breeds && playerGuess.breeds.length > 0
+                      ? playerGuess.breeds[0].name
+                      : ""}
                   </Button>
                 );
               })
