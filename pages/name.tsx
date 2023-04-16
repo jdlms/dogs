@@ -21,7 +21,7 @@ export default function Name() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
 
   const [randomImg, setRandomImg] = useState("");
-  const [namesArr, setNamesArr] = useState<Dog[]>([]);
+  const [namesArr, setNamesArr] = useState<Dog[] | undefined>(undefined);
   const [correctName, setCorrectName] = useState<Dog | undefined>(undefined);
   const [difficultyNum, setDifficultyNum] = useState(6);
   const [guess, setGuess] = useState(false);

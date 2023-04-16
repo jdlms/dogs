@@ -20,7 +20,7 @@ export default function Photo() {
   const scoreObj = useScoreContext();
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
   const [correctName, setCorrectName] = useState<Dog | undefined>(undefined);
-  const [imgArr, setImgArr] = useState<Dog[]>([]);
+  const [imgArr, setImgArr] = useState<Dog[] | undefined>(undefined);
   const [correctImg, setCorrectImg] = useState("");
   const [difficultyNum, setDifficultyNum] = useState(5);
   const [guess, setGuess] = useState(false);

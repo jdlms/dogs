@@ -19,7 +19,7 @@ export const Button = styled.button`
 
 type guessNameProps = {
   randomImg: string;
-  namesArr: Dog[];
+  namesArr: Dog[] | undefined;
   handleClick: (playerguess: Dog) => void;
   disabled: boolean;
 };
@@ -59,18 +59,20 @@ export function GuessName({ randomImg, namesArr, handleClick, disabled }: guessN
           justifyContent: "space-around",
         }}
       >
-        {namesArr.length > 0
-          ? namesArr.map((playerGuess: Dog) => {
-              return (
-                <Button
-                  disabled={disabled}
-                  onClick={() => handleClick(playerGuess)}
-                  key={playerGuess.id}
-                >
-                  {playerGuess.breeds[0].name}
-                </Button>
-              );
-            })
+        {namesArr
+          ? namesArr.length > 0
+            ? namesArr.map((playerGuess: Dog) => {
+                return (
+                  <Button
+                    disabled={disabled}
+                    onClick={() => handleClick(playerGuess)}
+                    key={playerGuess.id}
+                  >
+                    {playerGuess.breeds[0].name}
+                  </Button>
+                );
+              })
+            : null
           : null}
       </div>
       {/* <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} /> */}
