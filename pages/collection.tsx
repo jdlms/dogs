@@ -50,8 +50,10 @@ export default function Collection() {
               collection.map((dog: Dog) => {
                 return <CollectionImg key={dog.id} dog={dog} handleClick={handleClick} />;
               })
-            ) : (
+            ) : collection.length >= 1 ? (
               <Loader />
+            ) : (
+              <h2>You haven&apos;t collected any dogs yet. Woof!</h2>
             )}
           </ul>
         </div>

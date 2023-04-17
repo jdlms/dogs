@@ -39,33 +39,31 @@ export function GuessPhoto({ correctName, imgArr, handleClick }: guessPhotoProps
           }}
         >
           {imgArr ? (
-            imgArr.length > 0 ? (
-              imgArr.map((playerGuess: Dog) => {
-                return (
-                  <li key={playerGuess.id}>
-                    <Image
-                      className="dogPic"
-                      onClick={() => handleClick(playerGuess)}
-                      style={{
-                        // height: "150px",
-                        objectFit: "fill",
-                        borderWidth: "2px",
-                        borderColor: "#c0413b",
-                        borderStyle: "solid",
-                        cursor: "pointer",
-                      }}
-                      src={playerGuess.url}
-                      alt={playerGuess.breeds[0].name}
-                      height={150}
-                      width={200}
-                    />
-                  </li>
-                );
-              })
-            ) : (
-              <Loader />
-            )
-          ) : null}
+            imgArr.map((playerGuess: Dog) => {
+              return (
+                <li key={playerGuess.id}>
+                  <Image
+                    className="dogPic"
+                    onClick={() => handleClick(playerGuess)}
+                    style={{
+                      // height: "150px",
+                      objectFit: "fill",
+                      borderWidth: "2px",
+                      borderColor: "#c0413b",
+                      borderStyle: "solid",
+                      cursor: "pointer",
+                    }}
+                    src={playerGuess.url}
+                    alt={playerGuess.breeds[0].name}
+                    height={150}
+                    width={200}
+                  />
+                </li>
+              );
+            })
+          ) : (
+            <Loader />
+          )}
         </ul>
       </div>
       {/* <HardMode setDifficultyNum={setDifficultyNum} setGuess={setGuess} guess={guess} /> */}
