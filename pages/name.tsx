@@ -64,8 +64,16 @@ export default function Name() {
       const res = await axios.get("/api/getDogs");
       const randomDog = Math.floor(Math.random() * res.data.length);
       setRandomImg(res.data[randomDog].url);
-      console.log(res.data[randomDog].breeds);
 
+
+
+      console.log('RESPONSE:',res);
+      console.log('DATA[INDEX].BREEDS:', res.data[randomDog].breeds);
+
+      
+      
+      
+      
       setCorrectName(res.data[randomDog]);
 
       const dogNamesArr: Dog[] = [];
