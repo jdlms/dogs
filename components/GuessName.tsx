@@ -27,8 +27,9 @@ type guessNameProps = {
 export function GuessName({ randomImg, namesArr, handleClick, disabled }: guessNameProps) {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
-  function handleImageLoad(event: any) {
-    setImageSize({ width: event.target.width, height: event.target.height });
+  function handleImageLoad(event: React.SyntheticEvent<HTMLImageElement, Event>) {
+    const target = event.target as HTMLImageElement;
+    setImageSize({ width: target?.width || 0, height: target?.height || 0 });
   }
 
   return (

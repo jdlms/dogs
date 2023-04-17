@@ -21,7 +21,6 @@ export default function Photo() {
   const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
   const [correctName, setCorrectName] = useState<Dog | undefined>(undefined);
   const [imgArr, setImgArr] = useState<Dog[] | undefined>(undefined);
-  const [correctImg, setCorrectImg] = useState("");
   const [difficultyNum, setDifficultyNum] = useState(5);
   const [guess, setGuess] = useState(false);
   const [modalText, setModalText] = useState<Dog | undefined>(undefined);
@@ -58,17 +57,16 @@ export default function Photo() {
 
   const getRandomName = async function () {
     try {
-      const res = await axios.get("/api/getDogs");
-      const randomDog = Math.floor(Math.random() * res.data.length);
-      setCorrectName(res.data[randomDog]);
-      setCorrectImg(res.data[0].url);
-      let dogImgArr: Dog[] = [];
-      dogImgArr.push(res.data[randomDog]);
+      const { data } = await axios.get("../api/getDogs");
+      const randomDog = Math.floor(Math.random() * data.length);
+      setCorrectName(data[randomDog]);
+      const dogImgArr: Dog[] = [];
+      dogImgArr.push(data[randomDog]);
 
-      res.data.filter((dogObj: Dog) => {
+      data.filter((dogObj: Dog) => {
         const dogName = dogObj.breeds[0].name;
 
-        let oldDogImg = dogImgArr.some((dog) => dog.breeds[0].name === dogName);
+        const oldDogImg = dogImgArr.some((dog) => dog.breeds[0].name === dogName);
         if (!oldDogImg && dogImgArr.length < difficultyNum) {
           return dogImgArr.push(dogObj);
         }

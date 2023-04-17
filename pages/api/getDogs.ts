@@ -15,6 +15,7 @@ export default async function getDogs(req: NextApiRequest, res: NextApiResponse)
     );
     return res.status(200).send(axiosResponse.data);
   } catch (error) {
-    return res.status(404).send("error");
+    console.log("API CALL ERROR");
+    return res.status(500).send(error.message);
   }
 }

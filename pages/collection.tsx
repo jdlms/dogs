@@ -9,11 +9,11 @@ import { player } from "@/lib/player";
 import { useState } from "react";
 
 export default function Collection() {
-  const [playerData, setPlayerData] = useLocalStorage("guess-that-dog", player);
+  const [playerData] = useLocalStorage("guess-that-dog", player);
   const [modalText, setModalText] = useState<Dog | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  let collection = playerData.correctBreedIds;
+  const collection = playerData.correctBreedIds;
   const component = "collection";
 
   const handleClick = (dog: Dog) => {

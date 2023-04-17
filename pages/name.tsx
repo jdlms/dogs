@@ -67,14 +67,14 @@ export default function Name() {
 
       setCorrectName(res.data[randomDog]);
 
-      let dogNamesArr: Dog[] = [];
+      const dogNamesArr: Dog[] = [];
       dogNamesArr.push(res.data[randomDog]);
 
       // #todo in this .map breed name duplications are currently possible
       res.data.filter((dogObj: Dog) => {
-        let dogName: string = dogObj.breeds[0].name;
+        const dogName: string = dogObj.breeds[0].name;
 
-        let oldDogName = dogNamesArr.some((dog) => dog.breeds[0].name === dogName);
+        const oldDogName = dogNamesArr.some((dog) => dog.breeds[0].name === dogName);
 
         if (!oldDogName && dogNamesArr.length < difficultyNum) {
           return dogNamesArr.push(dogObj);
